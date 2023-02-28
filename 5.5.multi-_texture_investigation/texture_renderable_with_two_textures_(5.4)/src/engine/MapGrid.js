@@ -1,6 +1,6 @@
 
 
-class MapGrind() {
+class MapGrid() {
     constructor() {
 
     }
