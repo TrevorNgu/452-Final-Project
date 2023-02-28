@@ -21,6 +21,7 @@ import * as input from "./input.js";
 import Camera from "./camera.js";
 import Scene from "./scene.js";
 import Transform from "./transform.js";
+import MapGrid from "./MapGrid.js";
 
 // renderables 
 import Renderable from "./renderables/renderable.js";
@@ -72,7 +73,7 @@ export default {
     input,
 
     // Util classes
-    Camera, Scene, Transform, 
+    Camera, Scene, Transform, MapGrid, 
     
     // Renderables
     Renderable, TextureRenderable, SpriteRenderable, SpriteAnimateRenderable, FontRenderable,

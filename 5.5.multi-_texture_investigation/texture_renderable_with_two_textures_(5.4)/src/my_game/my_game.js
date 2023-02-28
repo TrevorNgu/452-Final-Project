@@ -74,6 +74,8 @@ class MyGame extends engine.Scene {
                 + this.mV.toPrecision(2).toString() + ") Size:(" 
                 + this.mW.toPrecision(2).toString() + "," 
                 + this.mH.toPrecision(2).toString() + ")");
+        this.mGrid = new engine.MapGrid(5, 5);
+        this.mGrid.printGrid();
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more
