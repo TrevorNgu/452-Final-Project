@@ -17,6 +17,14 @@ class Tile extends TextureRenderable{
         this.isCollisions = false;
         this.hasEvent = false;
     }
+
+    update(){
+
+    }
+
+    draw(){
+
+    }
 }
 
 export default Tile;
