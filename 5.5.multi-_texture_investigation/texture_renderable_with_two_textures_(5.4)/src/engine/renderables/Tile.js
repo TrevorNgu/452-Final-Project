@@ -22,7 +22,7 @@ class Tile extends TextureRenderable{
 
     }
 
-    draw(){
+    draw(camera){
 
     }
 }
