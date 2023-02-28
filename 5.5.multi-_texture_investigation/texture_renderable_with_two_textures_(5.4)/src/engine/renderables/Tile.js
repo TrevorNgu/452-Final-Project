@@ -12,8 +12,9 @@ import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
 
 class Tile extends TextureRenderable{
-    constructor(texture){
+    constructor(tex){
         super();
+        this.texture = tex;
         this.isForeground = false;
         this.isCollisions = false;
         this.hasEvent = false;
