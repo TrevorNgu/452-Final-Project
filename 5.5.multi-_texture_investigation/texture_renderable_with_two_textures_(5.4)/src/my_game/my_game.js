@@ -55,7 +55,7 @@ class MyGame extends engine.Scene {
 
     init() {
         this.mGrid = new engine.MapGrid(5,5);
-        this.mGrid.printGrid();
+        //this.mGrid.printGrid();
         this.mGrid.setGridPos(35,30);
         this.mGrid.setTile(this.mTilePic, 10, 10);
         this.mGrid.createTilePicturesForGrid();
