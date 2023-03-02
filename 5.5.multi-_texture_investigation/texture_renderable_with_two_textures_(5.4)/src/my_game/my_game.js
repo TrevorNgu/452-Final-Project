@@ -1,6 +1,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 import engine from "../engine/index.js";
+import MapGrid from "../engine/MapGrid.js";
 
 import Hero from "./hero.js";
 
@@ -15,6 +16,8 @@ class MyGame extends engine.Scene {
         this.kTest = "assets/pete.png";
         this.kBg = "assets/bg.png";
 
+        this.mTilePic = "assets/tilePic.png";
+
         // The camera to view the scene
         this.mCamera = null;
         this.mBg = null;
@@ -28,6 +31,8 @@ class MyGame extends engine.Scene {
         this.mW = 0.3;
         this.mH = 0.3; 
         this.mTheta = 0;
+
+        this.mGrid = null;
     }
 
     load() {
@@ -35,6 +40,8 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.kUp);
         engine.texture.load(this.kTest);
         engine.texture.load(this.kBg);
+
+        engine.texture.load(this.mTilePic);
     }
 
     unload() {
@@ -42,9 +49,18 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.kUp);
         engine.texture.unload(this.KTest);
         engine.texture.unload(this.kBg);
+
+        engine.texture.unload(this.mTilePic);
     }
 
     init() {
+        this.mGrid = new engine.MapGrid(5,5);
+        this.mGrid.printGrid();
+        this.mGrid.setGridPos(35,30);
+        this.mGrid.setTile(this.mTilePic, 10, 10);
+        this.mGrid.createTilePicturesForGrid();
+
+
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(
             vec2.fromValues(50, 40), // position of the camera
@@ -74,8 +90,8 @@ class MyGame extends engine.Scene {
                 + this.mV.toPrecision(2).toString() + ") Size:(" 
                 + this.mW.toPrecision(2).toString() + "," 
                 + this.mH.toPrecision(2).toString() + ")");
-        this.mGrid = new engine.MapGrid(5, 5);
-        this.mGrid.printGrid();
+        //this.mGrid = new engine.MapGrid(5, 5);
+        //this.mGrid.printGrid();
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more
@@ -91,6 +107,9 @@ class MyGame extends engine.Scene {
         this.mTest.draw(this.mCamera);
 
         this.mMsg.draw(this.mCamera);   // only draw status in the main camera
+
+        this.mGrid.draw(this.mCamera);
+
     }
 
     // The Update function, updates the application state. Make sure to _NOT_ draw
