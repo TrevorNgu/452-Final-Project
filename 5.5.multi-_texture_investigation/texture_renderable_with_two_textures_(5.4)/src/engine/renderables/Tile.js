@@ -15,17 +15,27 @@ class Tile extends TextureRenderable{
     constructor(tex){
         super();
         this.texture = tex;
-        this.isForeground = false;
-        this.isCollisions = false;
+        this.hasCollision = false;
         this.hasEvent = false;
     }
 
-    update(){
-
+    draw(camera){
+        // activate the texture
+        texture.activate(this.mTexture, glSys.get().TEXTURE0);
+        
+        super.draw(camera);
     }
 
-    draw(camera){
+    update(){
+        
+    }
 
+    toggleCollisions(){
+        this.hasCollision = !this.hasCollision;
+    }
+
+    toggleEvent(){
+        this.hasEvent = !this.hasEvent;
     }
 }
 
