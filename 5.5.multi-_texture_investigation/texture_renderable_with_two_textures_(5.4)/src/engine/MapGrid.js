@@ -14,6 +14,7 @@ class MapGrid {
 
         this.tilePictures = [];
         this.objectsPicArr = [];
+        this.objectsPosArr = [];
 
 
         this.gridPosX = 0;
@@ -44,6 +45,27 @@ class MapGrid {
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
 
         this.objectsPicArr.push(newObject);
+        this.objectsPosArr.push([xPos, yPos]);
+    }
+
+    moveObjectToSpecTile(objeIndx, xPosToMove, yPosToMove) {
+        let tileCenterPos = this.getCenterOfTile(xPosToMove, yPosToMove);
+        this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.objectsPosArr[objeIndx] = (xPosToMove, yPosToMove);
+    }
+
+    moveObjectInDerection(objeIndx, xPosChenge, yPosChenge) {
+        console.log(this.objectsPosArr[objeIndx]);
+        let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
+
+        let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
+
+        let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
+
+        this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.objectsPosArr[objeIndx] = ([objNewTilePos[0], objNewTilePos[1]]);
+
+        console.log(this.objectsPosArr[objeIndx]);
     }
 
     setGridPos(x,y) {
