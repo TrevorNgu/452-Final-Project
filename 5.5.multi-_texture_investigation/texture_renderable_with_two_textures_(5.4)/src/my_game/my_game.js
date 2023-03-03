@@ -16,8 +16,10 @@ class MyGame extends engine.Scene {
         this.kTest = "assets/pete.png";
         this.kBg = "assets/bg.png";
 
+        this.mDefaultTilePic = "assets/tileDefPic.png";
         this.mTilePic = "assets/tilePic.png";
-        this.mCharacterPic = "assets/character3.png";
+        this.mCharacterPic = "assets/character2.png";
+        this.mBlockPic = "assets/character4.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -42,8 +44,10 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.kTest);
         engine.texture.load(this.kBg);
 
+        engine.texture.load(this.mDefaultTilePic);
         engine.texture.load(this.mTilePic);
         engine.texture.load(this.mCharacterPic);
+        engine.texture.load(this.mBlockPic);
     }
 
     unload() {
@@ -52,17 +56,23 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.KTest);
         engine.texture.unload(this.kBg);
 
+        engine.texture.unload(this.mDefaultTilePic);
         engine.texture.unload(this.mTilePic);
         engine.texture.unload(this.mCharacterPic);
+        engine.texture.unload(this.mBlockPic);
     }
 
     init() {
         this.mGrid = new engine.MapGrid(5,5);
-        //this.mGrid.printGrid();
         this.mGrid.setGridPos(35,30);
-        this.mGrid.setTile(this.mTilePic, 10, 10);
+        this.mGrid.setTile(this.mDefaultTilePic, 10, 10);
         this.mGrid.createTilePicturesForGrid();
-        this.mGrid.createObject(this.mCharacterPic, 2,2);
+        this.mGrid.createObject(this.mCharacterPic, 2,3);
+        this.mGrid.createObject(this.mBlockPic, 2,2);
+        this.mGrid.createObject(this.mBlockPic, 1,2);
+        this.mGrid.createObject(this.mBlockPic, 0,2);
+        this.mGrid.createObject(this.mBlockPic, 3,0);
+        this.mGrid.createObject(this.mBlockPic, 4,0);
 
 
         // Step A: set up the cameras
@@ -105,11 +115,7 @@ class MyGame extends engine.Scene {
         engine.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
 
         this.mCamera.setViewAndCameraMatrix();
-        
         this.mBg.draw(this.mCamera);
-        this.mHero.draw(this.mCamera);
-        this.mTest.draw(this.mCamera);
-
         this.mMsg.draw(this.mCamera);   // only draw status in the main camera
 
         this.mGrid.draw(this.mCamera);

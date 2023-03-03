@@ -106,7 +106,6 @@ class MapGrid {
         this.tilePic = tile;
         this.tileWidth = width;
         this.tileHight = hight;
-        console.log(this.tilePic, this.tileWidth, this.tileHight)
     }
 
 
@@ -121,10 +120,9 @@ class MapGrid {
         for(let i = 0; i < this.mHeight; i++) {
             this.tilePictures[i] = [];
             for(let j = 0; j < this.mWidth; j++) {
-                //let newTile = new engine.TextureRenderable(this.tilePic, null);
 
                 let newTile = new engine.SpriteRenderable(this.tilePic);
-                //newTile.setElementPixelPositions(0, 120, 0, 180);
+
                 newTile.setColor([0, 0, 0, 0]);
                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
 
