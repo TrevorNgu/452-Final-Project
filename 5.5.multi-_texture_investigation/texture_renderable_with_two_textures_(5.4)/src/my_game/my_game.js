@@ -17,6 +17,7 @@ class MyGame extends engine.Scene {
         this.kBg = "assets/bg.png";
 
         this.mTilePic = "assets/tilePic.png";
+        this.mCharacterPic = "assets/character.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -42,6 +43,7 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.kBg);
 
         engine.texture.load(this.mTilePic);
+        engine.texture.load(this.mCharacterPic);
     }
 
     unload() {
@@ -51,6 +53,7 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.kBg);
 
         engine.texture.unload(this.mTilePic);
+        engine.texture.unload(this.mCharacterPic);
     }
 
     init() {
@@ -59,6 +62,7 @@ class MyGame extends engine.Scene {
         this.mGrid.setGridPos(35,30);
         this.mGrid.setTile(this.mTilePic, 10, 10);
         this.mGrid.createTilePicturesForGrid();
+        this.mGrid.createObject(this.mCharacterPic, 2,2);
 
 
         // Step A: set up the cameras
