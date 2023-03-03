@@ -17,7 +17,7 @@ class MyGame extends engine.Scene {
         this.kBg = "assets/bg.png";
 
         this.mTilePic = "assets/tilePic.png";
-        this.mCharacterPic = "assets/character.png";
+        this.mCharacterPic = "assets/character3.png";
 
         // The camera to view the scene
         this.mCamera = null;
