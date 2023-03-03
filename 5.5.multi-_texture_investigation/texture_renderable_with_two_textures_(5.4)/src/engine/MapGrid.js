@@ -13,10 +13,13 @@ class MapGrid {
         this.mArray = [];
 
         this.tilePictures = [];
+        this.objectsPicArr = [];
 
 
         this.gridPosX = 0;
         this.gridPosY = 0;
+
+        this.objectPic = null;
 
 
         for(let i = 0; i < height; i++) {
@@ -28,6 +31,19 @@ class MapGrid {
 
         this.mXPos = 0;
         this.mYPos = 0;
+    }
+
+    createObject(objectPic, xPos, yPos) {
+        this.objectPic = objectPic;
+        let newObject= new engine.SpriteRenderable(this.objectPic);
+        //newObject.setElementPixelPositions(0, 120, 0, 180);
+        newObject.setColor([0, 0, 0, 0]);
+
+        let tileCenterPos = this.getCenterOfTile(xPos, yPos);
+        newObject.getXform().setSize(this.tileWidth, this.tileHight);
+        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+
+        this.objectsPicArr.push(newObject);
     }
 
     setGridPos(x,y) {
@@ -73,8 +89,8 @@ class MapGrid {
 
 
     getCenterOfTile(x, y) {
-        let centerX = x * (this.tileWidth) - this.tileWidth/2;
-        let centerY = y * (this.tileHight) - this.tileHight/2;
+        let centerX = (x * (this.tileWidth)) - this.tileWidth/2;
+        let centerY = (y * (this.tileHight)) - this.tileHight/2;
         let tileCenterPos = [centerX, centerY];
         return tileCenterPos;
     }
@@ -86,7 +102,7 @@ class MapGrid {
                 //let newTile = new engine.TextureRenderable(this.tilePic, null);
 
                 let newTile = new engine.SpriteRenderable(this.tilePic);
-                newTile.setElementPixelPositions(0, 120, 0, 180);
+                //newTile.setElementPixelPositions(0, 120, 0, 180);
                 newTile.setColor([0, 0, 0, 0]);
                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
 
@@ -95,13 +111,6 @@ class MapGrid {
                 newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
                 this.tilePictures[i][j] = newTile;
 
-
-
-/*                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
-                let tileCenterPos = getCenterOfTile(i, v);
-
-                newTile.getXform().setPosition(tileCenterPos[0], tileCenterPos[1]); */
-                //this.tilePictures[i][j] = newTile;
             }
         }
     }
@@ -112,6 +121,10 @@ class MapGrid {
             for(let j = 0; j < this.mWidth; j++) {
                 this.tilePictures[i][j].draw(camera);
             }
+        }
+
+        for(let i = 0; i < this.objectsPicArr.length; i++) {
+            this.objectsPicArr[i].draw(camera);
         }
 
         return;
