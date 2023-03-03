@@ -126,7 +126,7 @@ class MyGame extends engine.Scene {
         let xdelta = 0.3;
         let delta = 0.005;
         let xform = this.mTest.getXform();
-        if (engine.input.isKeyPressed(engine.input.keys.Up)) {
+/*         if (engine.input.isKeyPressed(engine.input.keys.Up)) {
             if (engine.input.isKeyPressed(engine.input.keys.Shift))
                 this.mH += delta;
             else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
@@ -157,7 +157,7 @@ class MyGame extends engine.Scene {
                     this.mU -= delta;
             else xform.incXPosBy(-xdelta);
             once = true;
-        }
+        } */
         if (once) {
             this.mTest.setSecondTexture(this.mU, this.mV, this.mW, this.mH, this.mTheta);    
             this.mMsg.setText("At:(" 
@@ -167,8 +167,32 @@ class MyGame extends engine.Scene {
                 + this.mH.toPrecision(2).toString() + ")");
         }
         
+
+        this.objectControler();
+    }
+
+    objectControler() {
+        if (engine.input.isKeyPressed(engine.input.keys.X)) {
+            this.mGrid.moveObjectToSpecTile(0, 1, 1);
+        }
+        //Controler
+        if (engine.input.isKeyClicked(engine.input.keys.Up)) {
+            this.mGrid.moveObjectInDerection(0, 0, 1);
+
+        }
+        if (engine.input.isKeyClicked(engine.input.keys.Down)) {
+            this.mGrid.moveObjectInDerection(0, 0, -1);
+        }
+        if (engine.input.isKeyClicked(engine.input.keys.Left)) {
+            this.mGrid.moveObjectInDerection(0, -1, 0);
+        }
+        if (engine.input.isKeyClicked(engine.input.keys.Right)) {
+            this.mGrid.moveObjectInDerection(0, 1, 0);
+        }
+
     }
 }
+
 
 window.onload = function () {
     engine.init("GLCanvas");
