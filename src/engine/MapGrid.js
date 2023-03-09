@@ -1,6 +1,8 @@
 
 import engine from "../engine/index.js";
 
+import Tile from "../engine/renderables/Tile.js";
+
 class MapGrid {
 
     constructor(width, height) {
@@ -15,6 +17,7 @@ class MapGrid {
         this.tilePictures = [];
         this.objectsPicArr = [];
         this.objectsPosArr = [];
+        this.tileArray = [];
 
 
         this.gridPosX = 0;
@@ -48,6 +51,10 @@ class MapGrid {
         this.objectsPosArr.push([xPos, yPos]);
     }
 
+    setColisionForObject(objectIndx) {
+        this.objectsPosArr[objectIndx].setModeCollisions(true);
+    }
+
     moveObjectToSpecTile(objeIndx, xPosToMove, yPosToMove) {
         let tileCenterPos = this.getCenterOfTile(xPosToMove, yPosToMove);
         this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
@@ -60,12 +67,14 @@ class MapGrid {
 
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
 
-        let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
+        if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
+            let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
 
-        this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-        this.objectsPosArr[objeIndx] = ([objNewTilePos[0], objNewTilePos[1]]);
-
-        console.log(this.objectsPosArr[objeIndx]);
+            this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+            this.objectsPosArr[objeIndx] = ([objNewTilePos[0], objNewTilePos[1]]);
+    
+            console.log(this.objectsPosArr[objeIndx]);
+        }
     }
 
     setGridPos(x,y) {
@@ -89,8 +98,13 @@ class MapGrid {
         return;
     }
 
-    getTile() {
-        return;
+    getTile(tileXIndex, tileYIndex) {
+        //console.log(this.tileArray[tileXIndex][tileYIndex]);
+        return this.tileArray[tileXIndex][tileYIndex];
+    }
+
+    setTileCollisionMode(mode, tileXIndex, tileYIndex) {
+        this.tileArray[tileXIndex][tileYIndex].setCollisionsMode(mode);
     }
 
     setPosition(xPos, yPos) {
@@ -119,6 +133,7 @@ class MapGrid {
     createTilePicturesForGrid() {
         for(let i = 0; i < this.mHeight; i++) {
             this.tilePictures[i] = [];
+            this.tileArray[i] = [];
             for(let j = 0; j < this.mWidth; j++) {
 
                 let newTile = new engine.SpriteRenderable(this.tilePic);
@@ -131,15 +146,27 @@ class MapGrid {
                 newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
                 this.tilePictures[i][j] = newTile;
 
+                this.tileArray[i][j] = new Tile(newTile);
+
             }
         }
     }
+
+/*     createTileObjects() {
+        for(let i = 0; i < this.mHeight; i++) {
+            this.tileArray[i] = [];
+            for(let j = 0; j < this.mWidth; j++) {
+                this.tileArray[i][j] = new engine.Tile();
+            }
+        }
+    } */
 
     draw (camera) {
 
         for(let i = 0; i < this.mHeight; i++) {
             for(let j = 0; j < this.mWidth; j++) {
-                this.tilePictures[i][j].draw(camera);
+                //this.tilePictures[i][j].draw(camera);
+                this.tileArray[i][j].draw(camera);
             }
         }
 
