@@ -20,6 +20,8 @@ class MyGame extends engine.Scene {
         this.mTilePic = "assets/tilePic.png";
         this.mCharacterPic = "assets/character2.png";
         this.mBlockPic = "assets/character4.png";
+        this.mBushPic = "assets/Bush.png";
+        this.mDogPic = "assets/Dog.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -48,6 +50,8 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.mTilePic);
         engine.texture.load(this.mCharacterPic);
         engine.texture.load(this.mBlockPic);
+        engine.texture.load(this.mBushPic);
+        engine.texture.load(this.mDogPic);
     }
 
     unload() {
@@ -60,6 +64,8 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.mTilePic);
         engine.texture.unload(this.mCharacterPic);
         engine.texture.unload(this.mBlockPic);
+        engine.texture.load(this.mBushPic);
+        engine.texture.load(this.mDogPic);
     }
 
     init() {
@@ -68,11 +74,12 @@ class MyGame extends engine.Scene {
         this.mGrid.setTile(this.mDefaultTilePic, 10, 10);
         this.mGrid.createTilePicturesForGrid();
         this.mGrid.createObject(this.mCharacterPic, 2,3);
-        this.mGrid.createObject(this.mBlockPic, 2,2);
-        this.mGrid.createObject(this.mBlockPic, 1,2);
-        this.mGrid.createObject(this.mBlockPic, 0,2);
-        this.mGrid.createObject(this.mBlockPic, 3,0);
-        this.mGrid.createObject(this.mBlockPic, 4,0);
+        this.mGrid.createObject(this.mBushPic, 2,2);
+        this.mGrid.createObject(this.mBushPic, 0,2);
+        this.mGrid.createObject(this.mBushPic, 0,3);
+        this.mGrid.createObject(this.mBushPic, 3,4);
+        this.mGrid.createObject(this.mBushPic, 4,0);
+        this.mGrid.createObject(this.mDogPic, 1,1);
 
 
         // Step A: set up the cameras

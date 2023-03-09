@@ -123,7 +123,7 @@ class MapGrid {
 
                 let newTile = new engine.SpriteRenderable(this.tilePic);
 
-                newTile.setColor([0, 0, 0, 0]);
+                newTile.setColor([0, 1, 0, 0.8]);
                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
 
                 let tileCenterPos = this.getCenterOfTile(i, j);
