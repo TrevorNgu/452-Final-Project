@@ -15,5 +15,7 @@ class Event {
 
     }
 
-    activate();
+    activate(){
+        return;
+    }
 }
