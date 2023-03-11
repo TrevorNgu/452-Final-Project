@@ -12,11 +12,15 @@ import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
 
 class Tile extends TextureRenderable{
-    constructor(tex){
+    constructor(tex, evnt = null){
         super();
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
+        this.tileEvent = evnt;
+        if (this.tileEvent != null){
+            this.hasEvent = true;
+        }
     }
 
     draw(camera){
@@ -28,7 +32,15 @@ class Tile extends TextureRenderable{
     } 
 
     update(){
-        
+        //Pixel-Touch Activation
+        if (this.hasEvent == true){
+            //PixelTouch with player-character object
+            /**
+            if (touches PC sprite){
+                this.tileEvent.activate();
+            }
+            */
+        }
     }
 
     setCollisionsMode(mode){
