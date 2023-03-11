@@ -2,6 +2,7 @@
 import engine from "../engine/index.js";
 
 import Tile from "../engine/renderables/Tile.js";
+import BoundingBox from "./bounding_box.js";
 
 class MapGrid {
 
@@ -47,6 +48,11 @@ class MapGrid {
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+
+        //Create Bounding Box and push into tileBounds
+        this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
+        this.tileBounds.push(this.tileBox);
+
         //push to the array of object.
         this.objectsPicArr.push(newObject);
         this.objectsPosArr.push([xPos, yPos]);
