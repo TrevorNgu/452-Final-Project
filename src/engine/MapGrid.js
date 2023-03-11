@@ -77,6 +77,12 @@ class MapGrid {
         }
     }
 
+    getObjectCoord(objIndex) {
+        let objCurrentPos = this.objectsPosArr[objIndex];//this.getCenterOfTile(xPosToMove, yPosToMove);
+        console.log(objCurrentPos[0] + " " + objCurrentPos[1]);
+        return objCurrentPos;
+    }
+
     setGridPos(x,y) {
         this.gridPosX = x;
         this.gridPosY = y;
@@ -91,10 +97,23 @@ class MapGrid {
     }
 
     addTile(xCoord, yCoord, tile) {
+        let newTile = new engine.SpriteRenderable(tile);
+
+        newTile.setColor([1, 0, 0, 1]);
+        newTile.getXform().setSize(this.tileWidth, this.tileHight);
+        let tileCenterPos = this.getCenterOfTile(xCoord, yCoord);
+
+        newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.tilePictures[xCoord][yCoord] = newTile;
+
+        this.tileArray[xCoord][yCoord] = new Tile(newTile);
+
         return;
     }
 
     removeTile(xCoord, yCoord) {
+        this.tilePictures[xCoord][yCoord] = null;
+        this.tileArray[xCoord][yCoord] = null;
         return;
     }
 
