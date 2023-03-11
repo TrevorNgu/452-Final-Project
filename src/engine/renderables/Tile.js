@@ -17,6 +17,10 @@ class Tile extends TextureRenderable{
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
+        this.dynamic = false;
+
+        this.objTexture1 = null;
+        this.objTexture2 = null;
     }
 
     draw(camera){
@@ -25,6 +29,13 @@ class Tile extends TextureRenderable{
         
         //super.draw(camera);
         this.texture.draw(camera);
+
+        if(this.objTexture1 != null) {
+            this.objTexture1.draw(camera);
+        }
+        if(this.objTexture2 != null) {
+            this.objTexture2.draw(camera);
+        }
     } 
 
     update(){
@@ -40,8 +51,36 @@ class Tile extends TextureRenderable{
         return this.hasCollision;
     }
 
+    getDynamicMode() {
+        return this.dynamic;
+    }
+
+    getTexture() {
+        return this.texture;
+    }
+
     toggleEvent(){
         this.hasEvent = !this.hasEvent;
+    }
+
+    setDynamicMode(mode) {
+        this.dynamic = mode;
+    }
+
+    setFirstTextureObject(textrue) {
+        this.objTexture1 = textrue;
+    }
+
+    setSecondTextureObject(textrue) {
+        this.objTexture2 = textrue;
+    }
+
+    getFirstTextureObject() {
+        return this.objTexture1;
+    }
+
+    getSecondTextureObject() {
+        return this.objTexture2;
     }
 }
 

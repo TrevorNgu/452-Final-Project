@@ -23,6 +23,7 @@ class MyGame extends engine.Scene {
         this.mBlockPic = "assets/character4.png";
         this.mBushPic = "assets/Bush.png";
         this.mDogPic = "assets/Dog.png";
+        this.mBoxPic = "assets/box.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -53,6 +54,7 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.mBlockPic);
         engine.texture.load(this.mBushPic);
         engine.texture.load(this.mDogPic);
+        engine.texture.load(this.mBoxPic);
     }
 
     unload() {
@@ -67,6 +69,7 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.mBlockPic);
         engine.texture.load(this.mBushPic);
         engine.texture.load(this.mDogPic);
+        engine.texture.load(this.mBoxPic);
     }
 
     init() {
@@ -92,6 +95,9 @@ class MyGame extends engine.Scene {
         this.mGrid.createObject(this.mBushPic, 3,4);
         this.mGrid.createObject(this.mBushPic, 4,0);
         this.mGrid.createObject(this.mDogPic, 1,1);
+        this.mGrid.createObject(this.mBoxPic, 3,3);
+        this.mGrid.setTileCollisionMode(true, 3,3);
+        this.mGrid.setDynamicModeOfTile(true, 3,3);
 
 
         // Step A: set up the cameras
