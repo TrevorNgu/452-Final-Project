@@ -17,7 +17,7 @@ class Tile extends TextureRenderable{
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
-        this.tileEvent = evnt;
+        this.tileEvent = new Event(evnt);
         if (this.tileEvent != null){
             this.hasEvent = true;
         }
@@ -34,9 +34,9 @@ class Tile extends TextureRenderable{
     update(){
         //Pixel-Touch Activation
         if (this.hasEvent == true){
-            //PixelTouch with player-character object
+            //Bounding Box Intersection with player-character object
             /**
-            if (touches PC sprite){
+            if (PC Object is within this Bounding Box){
                 this.tileEvent.activate();
             }
             */
@@ -54,6 +54,10 @@ class Tile extends TextureRenderable{
 
     toggleEvent(){
         this.hasEvent = !this.hasEvent;
+    }
+
+    setEvent(evnt){
+        this.tileEvent = new Event(evnt);
     }
 }
 
