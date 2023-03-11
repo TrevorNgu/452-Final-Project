@@ -63,7 +63,7 @@ class MapGrid {
     }
 
     moveObjectInDerection(objeIndx, xPosChenge, yPosChenge) {
-        console.log(this.objectsPosArr[objeIndx]);
+        //console.log(this.objectsPosArr[objeIndx]);
         //get cureent pos
         let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
         //get new pos
@@ -83,8 +83,11 @@ class MapGrid {
         }
         else if((this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getDynamicMode()))  {
             if(!(this.tileArray[objCurrentPos[0] + xPosChenge + xPosChenge][objCurrentPos[1] + yPosChenge + yPosChenge].getCollisionMode())) {
+                //find moveble object index
+                let moveObjectIndex = this.findObjectIndexBasedOnPos(objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge);
+                
                 //move dinamic object
-                this.moveObjectPicture(7, objNewXPos + xPosChenge, objNewYPos + yPosChenge);
+                this.moveObjectPicture(moveObjectIndex, objNewXPos + xPosChenge, objNewYPos + yPosChenge);
                 //change the tile properties in the old pos
                 this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].setCollisionsMode(false);
                 this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].setDynamicMode(false);
@@ -95,6 +98,17 @@ class MapGrid {
                 this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
             }
         }
+    }
+
+    findObjectIndexBasedOnPos(xPos, yPos) {
+        for(let i = 0; i < this.objectsPicArr.length; i++) {
+            if((this.objectsPosArr[i][0] == xPos) && ((this.objectsPosArr[i][1] == yPos))) { //if((this.objectsPosArr[i][0]) == ([xPos, yPos])) {
+                console.log(i);
+                return i;
+            }
+        }
+        console.log("null");
+        return null;
     }
 
     moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { //(objeIndx, objNewXPos, objNewYPos)
