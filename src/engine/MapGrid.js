@@ -39,15 +39,15 @@ class MapGrid {
     }
 
     createObject(objectPic, xPos, yPos) {
+        //created object pic
         this.objectPic = objectPic;
         let newObject= new engine.SpriteRenderable(this.objectPic);
-        //newObject.setElementPixelPositions(0, 120, 0, 180);
         newObject.setColor([0, 0, 0, 0]);
-
+        //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-
+        //push to the array of object.
         this.objectsPicArr.push(newObject);
         this.objectsPosArr.push([xPos, yPos]);
     }
@@ -64,11 +64,13 @@ class MapGrid {
 
     moveObjectInDerection(objeIndx, xPosChenge, yPosChenge) {
         console.log(this.objectsPosArr[objeIndx]);
+        //get cureent pos
         let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
-
+        //get new pos
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
-
+        //check for colision on the new pos
         if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
+            //chenge pic position 
             let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
 
             this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
@@ -136,12 +138,12 @@ class MapGrid {
             this.tilePictures[i] = [];
             this.tileArray[i] = [];
             for(let j = 0; j < this.mWidth; j++) {
-
+                //create picures for tiles
                 let newTile = new engine.SpriteRenderable(this.tilePic);
 
                 newTile.setColor([0, 1, 0, 0.8]);
                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
-
+                //set new picture pos
                 let tileCenterPos = this.getCenterOfTile(i, j);
 
                 newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
@@ -163,14 +165,14 @@ class MapGrid {
     } */
 
     draw (camera) {
-
+        //draw tiles pic
         for(let i = 0; i < this.mHeight; i++) {
             for(let j = 0; j < this.mWidth; j++) {
                 //this.tilePictures[i][j].draw(camera);
                 this.tileArray[i][j].draw(camera);
             }
         }
-
+        //draw objects pic
         for(let i = 0; i < this.objectsPicArr.length; i++) {
             this.objectsPicArr[i].draw(camera);
         }
