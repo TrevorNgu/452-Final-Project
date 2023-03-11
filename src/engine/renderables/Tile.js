@@ -33,14 +33,6 @@ class Tile extends TextureRenderable{
 
     update(){
         //Pixel-Touch Activation
-        if (this.hasEvent == true){
-            //Bounding Box Intersection with player-character object
-            /**
-            if (PC Object is within this Bounding Box){
-                this.tileEvent.activate();
-            }
-            */
-        }
     }
 
     setCollisionsMode(mode){

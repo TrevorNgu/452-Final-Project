@@ -18,6 +18,7 @@ class MapGrid {
         this.objectsPicArr = [];
         this.objectsPosArr = [];
         this.tileArray = [];
+        this.tileBounds = [];
 
 
         this.gridPosX = 0;
