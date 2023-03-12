@@ -75,7 +75,6 @@ class Tile extends TextureRenderable{
     setDynamicMode(mode) {
         this.dynamic = mode;
     }
-    
 
     setFirstTextureObject(textrue) {
         this.objTexture1 = textrue;
