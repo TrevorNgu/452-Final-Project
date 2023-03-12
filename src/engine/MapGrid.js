@@ -47,7 +47,7 @@ class MapGrid {
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
-        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY)
+        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
 
 
         //push to the array of object.
@@ -78,11 +78,11 @@ class MapGrid {
         //get new pos
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
 
-        //check for colision on the new pos
+/*         //check for colision on the new pos
         if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
             //chenge pic position 
             let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
-
+        } */
         let objNewXPos = objCurrentPos[0] + xPosChenge;
         let objNewYPos = objCurrentPos[1] + yPosChenge;
         //check for colision on the new pos
@@ -118,8 +118,8 @@ class MapGrid {
         }
         console.log("AAAA");
         console.log((this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getDynamicMode()));
+    //}
     }
-}
 
     findObjectIndexBasedOnPos(xPos, yPos) {
         for(let i = 0; i < this.objectsPicArr.length; i++) {
