@@ -47,7 +47,7 @@ class MapGrid {
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
-        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY)
+        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
 
         //Create Bounding Box and push into tileBounds
         this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
@@ -135,7 +135,8 @@ class MapGrid {
         //this.tileArray[oldObjectXPos][oldObjectYPos].setFirstTextureObject(null);
         this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
         this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
-
+        //Move Correlating Bounding Box
+        this.tileBounds[objeIndx].setPosition(this.objectsPosArr[objeIndx][0], this.objectsPosArr[objeIndx][1]);
         //console.log(this.objectsPosArr[objeIndx]);
     }
 
