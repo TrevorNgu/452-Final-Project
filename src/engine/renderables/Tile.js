@@ -23,10 +23,9 @@ class Tile extends TextureRenderable{
         this.objTexture1 = null;
         this.objTexture2 = null;
 
-/*         this.tileEvent = evnt;
         if (this.tileEvent != null){
             this.hasEvent = true;
-        } */
+        }
     }
 
     draw(camera){
