@@ -37,11 +37,15 @@ class MapGrid {
         this.mYPos = 0;
     }
 
-    createObject(objectPic, xPos, yPos) {
+    createObject(objectPic, xPos, yPos, color) {
         this.objectPic = objectPic;
         let newObject= new engine.SpriteRenderable(this.objectPic);
         //newObject.setElementPixelPositions(0, 120, 0, 180);
-        newObject.setColor([0, 0, 0, 0]);
+        if(arguments.length == 4) {
+            newObject.setColor(color);
+        } else {
+            newObject.setColor([0, 0, 0, 0]);
+        }
 
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
@@ -99,7 +103,7 @@ class MapGrid {
     addTile(xCoord, yCoord, tile) {
         let newTile = new engine.SpriteRenderable(tile);
 
-        newTile.setColor([1, 0, 0, 1]);
+        newTile.setColor([0, 0, 0, 1]);
         newTile.getXform().setSize(this.tileWidth, this.tileHight);
         let tileCenterPos = this.getCenterOfTile(xCoord, yCoord);
 
@@ -117,6 +121,21 @@ class MapGrid {
         return;
     }
 
+    setGridColor(color) {
+        for(let i = 0; i < this.mHeight; i++) {
+            for(let j = 0; j < this.mWidth; j++) {
+                console.log("test")
+                this.tileArray[i][j].setColor(color);
+                this.tilePictures[i][j].setColor(color);
+            }
+        }
+    }
+
+    setTileColor(xCoord, yCoord, color) {
+        this.tileArray[xCoord][yCoord].setColor(color);
+        this.tilePictures[xCoord][yCoord].setColor(color);
+    }
+
     getTile(tileXIndex, tileYIndex) {
         //console.log(this.tileArray[tileXIndex][tileYIndex]);
         return this.tileArray[tileXIndex][tileYIndex];
@@ -124,6 +143,14 @@ class MapGrid {
 
     setTileCollisionMode(mode, tileXIndex, tileYIndex) {
         this.tileArray[tileXIndex][tileYIndex].setCollisionsMode(mode);
+    }
+
+    setAllTileCollisionMode(mode) {
+        for(let i = 0; i < this.mHeight; i++) {
+            for(let j = 0; j < this.mWidth; j++) {
+                this.tileArray[i][j].setCollisionsMode(mode);
+            }
+        }
     }
 
     setPosition(xPos, yPos) {
