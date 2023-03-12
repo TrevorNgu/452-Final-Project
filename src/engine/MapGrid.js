@@ -38,12 +38,16 @@ class MapGrid {
         this.mYPos = 0;
     }
 
-    createObject(objectPic, xPos, yPos) {
-        //created object pic
+
+    createObject(objectPic, xPos, yPos, color) {
         this.objectPic = objectPic;
         let newObject= new engine.SpriteRenderable(this.objectPic);
-        newObject.setColor([0, 0, 0, 0]);
-        //set pic position
+        //newObject.setElementPixelPositions(0, 120, 0, 180);
+        if(arguments.length == 4) {
+            newObject.setColor(color);
+        } else {
+            newObject.setColor([0, 0, 0, 0]);
+        }
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
@@ -111,7 +115,7 @@ class MapGrid {
         return null;
     }
 
-    moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { //(objeIndx, objNewXPos, objNewYPos)
+    moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { //(objeIndx, objNewXPos, objNewYPos) {
         let tileCenterPos = this.getCenterOfTile(objNewXPos, objNewYPos);
         //let objectPic = this.tileArray[oldObjectXPos][oldObjectYPos].getFirstTextureObject();
 
@@ -123,6 +127,12 @@ class MapGrid {
         this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
 
         //console.log(this.objectsPosArr[objeIndx]);
+    }
+
+    getObjectCoord(objIndex) {
+        let objCurrentPos = this.objectsPosArr[objIndex];//this.getCenterOfTile(xPosToMove, yPosToMove);
+        console.log(objCurrentPos[0] + " " + objCurrentPos[1]);
+        return objCurrentPos;
     }
 
     setGridPos(x,y) {
@@ -139,11 +149,39 @@ class MapGrid {
     }
 
     addTile(xCoord, yCoord, tile) {
+        let newTile = new engine.SpriteRenderable(tile);
+
+        newTile.setColor([0, 0, 0, 1]);
+        newTile.getXform().setSize(this.tileWidth, this.tileHight);
+        let tileCenterPos = this.getCenterOfTile(xCoord, yCoord);
+
+        newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.tilePictures[xCoord][yCoord] = newTile;
+
+        this.tileArray[xCoord][yCoord] = new Tile(newTile);
+
         return;
     }
 
     removeTile(xCoord, yCoord) {
+        this.tilePictures[xCoord][yCoord] = null;
+        this.tileArray[xCoord][yCoord] = null;
         return;
+    }
+
+    setGridColor(color) {
+        for(let i = 0; i < this.mHeight; i++) {
+            for(let j = 0; j < this.mWidth; j++) {
+                console.log("test")
+                this.tileArray[i][j].setColor(color);
+                this.tilePictures[i][j].setColor(color);
+            }
+        }
+    }
+
+    setTileColor(xCoord, yCoord, color) {
+        this.tileArray[xCoord][yCoord].setColor(color);
+        this.tilePictures[xCoord][yCoord].setColor(color);
     }
 
     getTile(tileXIndex, tileYIndex) {
@@ -153,6 +191,14 @@ class MapGrid {
 
     setTileCollisionMode(mode, tileXIndex, tileYIndex) {
         this.tileArray[tileXIndex][tileYIndex].setCollisionsMode(mode);
+    }
+
+    setAllTileCollisionMode(mode) {
+        for(let i = 0; i < this.mHeight; i++) {
+            for(let j = 0; j < this.mWidth; j++) {
+                this.tileArray[i][j].setCollisionsMode(mode);
+            }
+        }
     }
 
     setPosition(xPos, yPos) {

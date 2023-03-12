@@ -5,11 +5,12 @@ import MapGrid from "../engine/MapGrid.js";
 import Tile from "../engine/renderables/Tile.js";
 
 import Hero from "./hero.js";
-import UpperEngine from "./upper_engine.js";
+import MyGame from "./my_game.js";
+
 
 // potential texture: https://www.pngall.com/spot-light-png/download/68214
 
-class MyGame extends engine.Scene {
+class Shields extends engine.Scene {
     constructor() {
         super();
 
@@ -24,9 +25,6 @@ class MyGame extends engine.Scene {
         this.mBlockPic = "assets/character4.png";
         this.mBushPic = "assets/Bush.png";
         this.mDogPic = "assets/Dog.png";
-        this.mBoxPic = "assets/box.png";
-
-        this.mCrew = "assets/hero.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -46,19 +44,27 @@ class MyGame extends engine.Scene {
     }
 
     load() {
+        engine.texture.load(this.kMinionSprite);
+        engine.texture.load(this.kUp);
+        engine.texture.load(this.kTest);
+        engine.texture.load(this.kBg);
+
         engine.texture.load(this.mDefaultTilePic);
         engine.texture.load(this.mTilePic);
-
-        engine.texture.load(this.kBg);
-        engine.texture.load(this.mCrew);
+        engine.texture.load(this.mCharacterPic);
+        engine.texture.load(this.mBlockPic);
     }
 
     unload() {
+        engine.texture.unload(this.kMinionSprite);
+        engine.texture.unload(this.kUp);
+        engine.texture.unload(this.KTest);
+        engine.texture.unload(this.kBg);
+
         engine.texture.unload(this.mDefaultTilePic);
         engine.texture.unload(this.mTilePic);
-
-        engine.texture.unload(this.kBg);
-        engine.texture.unload(this.mCrew);
+        engine.texture.unload(this.mCharacterPic);
+        engine.texture.unload(this.mBlockPic);
     }
 
     init() {
@@ -66,36 +72,13 @@ class MyGame extends engine.Scene {
         this.mGrid.setGridPos(27,16);
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
         this.mGrid.createTilePicturesForGrid();
-        this.mGrid.setGridColor([.1, .1, .1, .8]);
-        this.mGrid.createObject(this.mCrew, 1, 3);
+        this.mGrid.createObject(this.mCharacterPic, 2,3);
+        this.mGrid.createObject(this.mBushPic, 2,2);
+        this.mGrid.setTileCollisionMode(true, 2,2);
+        
+        this.mGrid.addTile(4, 5, this.mDefaultTilePic);
+        this.mGrid.setGridColor([1, 0, 1, 1]);
 
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 1, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 1, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 2, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 2, [.4, .4, .4, .8]);
-
-
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 6, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 1, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 2, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 5, 0, [.4, .4, .4, .8]);
-
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 6, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 6, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 5, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 5, 7, [.4, .4, .4, .8]);
-
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 1, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 6, [.4, .4, .4, .8]);
-
-        this.mGrid.createObject(this.mDefaultTilePic, 3, 4, [0, 0, .8, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 4, 4, [0, 0, .8, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 3, 3, [0, 0, .8, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 4, 3, [0, 0, .8, .8]);
 
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(
@@ -109,7 +92,6 @@ class MyGame extends engine.Scene {
         this.mBg = new engine.TextureRenderable(this.kBg);
         this.mBg.getXform().setSize(150, 150);
         this.mBg.getXform().setPosition(50, 40);
-
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more
@@ -154,18 +136,12 @@ class MyGame extends engine.Scene {
     
     next() {
         super.next();
-        let nextLevel = new UpperEngine();
+        
+        let nextLevel = new MyGame();
         nextLevel.start();
+
     }
 
 }
 
-
-window.onload = function () {
-    engine.init("GLCanvas");
-
-    let myGame = new MyGame();
-    myGame.start();
-}
-
-export default MyGame;
+export default Shields;
