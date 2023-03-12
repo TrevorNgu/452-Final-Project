@@ -91,10 +91,15 @@ class MyGame extends engine.Scene {
         
 
         this.mGrid.createObject(this.mBushPic, 0,2);
+        this.mGrid.setTileCollisionMode(true, 0,2);
         this.mGrid.createObject(this.mBushPic, 0,3);
+        this.mGrid.setTileCollisionMode(true, 0,3);
         this.mGrid.createObject(this.mBushPic, 3,4);
+        this.mGrid.setTileCollisionMode(true, 3,4);
         this.mGrid.createObject(this.mBushPic, 4,0);
+        this.mGrid.setTileCollisionMode(true, 4,0);
         this.mGrid.createObject(this.mDogPic, 1,1);
+        this.mGrid.setTileCollisionMode(true, 1,1);
 
         this.mGrid.createObject(this.mBoxPic, 3,3);
         this.mGrid.setTileCollisionMode(true, 3,3);
