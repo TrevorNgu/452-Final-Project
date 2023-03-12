@@ -12,20 +12,20 @@ import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
 
 class Tile extends TextureRenderable{
-    constructor(tex){
+    constructor(tex, evnt = null){
         super();
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
+        this.tileEvent = new Event(evnt);
         this.dynamic = false;
 
         this.objTexture1 = null;
         this.objTexture2 = null;
 
-/*         this.tileEvent = evnt;
         if (this.tileEvent != null){
             this.hasEvent = true;
-        } */
+        }
     }
 
     draw(camera){
@@ -44,7 +44,7 @@ class Tile extends TextureRenderable{
     } 
 
     update(){
-        
+        //Pixel-Touch Activation
     }
 
     setCollisionsMode(mode){
@@ -68,6 +68,9 @@ class Tile extends TextureRenderable{
         this.hasEvent = !this.hasEvent;
     }
 
+    setEvent(evnt){
+        this.tileEvent = new Event(evnt);
+    }
     setDynamicMode(mode) {
         this.dynamic = mode;
     }
