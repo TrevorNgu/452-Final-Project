@@ -19,3 +19,5 @@ class Event {
         return;
     }
 }
+
+export default Event;

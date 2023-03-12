@@ -2,6 +2,7 @@
 import engine from "../engine/index.js";
 
 import Tile from "../engine/renderables/Tile.js";
+import BoundingBox from "./bounding_box.js";
 
 class MapGrid {
 
@@ -46,7 +47,12 @@ class MapGrid {
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
-        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY)
+
+        //Create Bounding Box and push into tileBounds
+        this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
+        this.tileBounds.push(this.tileBox);
+
         //push to the array of object.
         this.objectsPicArr.push(newObject);
         this.objectsPosArr.push([xPos, yPos]);
@@ -63,11 +69,18 @@ class MapGrid {
     }
 
     moveObjectInDerection(objeIndx, xPosChenge, yPosChenge) {
+        console.log(this.objectsPosArr[objeIndx]);
         //console.log(this.objectsPosArr[objeIndx]);
         //get cureent pos
         let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
         //get new pos
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
+
+        //check for colision on the new pos
+        if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
+            //chenge pic position 
+            let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
+
         let objNewXPos = objCurrentPos[0] + xPosChenge;
         let objNewYPos = objCurrentPos[1] + yPosChenge;
         //check for colision on the new pos
@@ -217,6 +230,7 @@ class MapGrid {
                 this.tileArray[i][j].draw(camera);
             }
         }
+        //draw objects pic
         //draw objects
         for(let i = 0; i < this.objectsPicArr.length; i++) {
             this.objectsPicArr[i].draw(camera);

@@ -17,6 +17,7 @@ class Tile extends TextureRenderable{
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
+        this.tileEvent = new Event(evnt);
         this.dynamic = false;
 
         this.objTexture1 = null;
@@ -44,7 +45,7 @@ class Tile extends TextureRenderable{
     } 
 
     update(){
-        
+        //Pixel-Touch Activation
     }
 
     setCollisionsMode(mode){
@@ -68,6 +69,8 @@ class Tile extends TextureRenderable{
         this.hasEvent = !this.hasEvent;
     }
 
+    setEvent(evnt){
+        this.tileEvent = new Event(evnt);
     setDynamicMode(mode) {
         this.dynamic = mode;
     }
