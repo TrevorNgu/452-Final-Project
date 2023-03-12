@@ -102,7 +102,7 @@ class MyGame extends engine.Scene {
         this.mGrid.setTileCollisionMode(true, 1,1);
 
         this.mGrid.createObject(this.mBoxPic, 3,3);
-        this.mGrid.setTileCollisionMode(true, 3,3);
+        //this.mGrid.setTileCollisionMode(true, 3,3);
         this.mGrid.setDynamicModeOfTile(true, 3,3);
 
         this.mGrid.createObject(this.mBoxPic, 3,5);
