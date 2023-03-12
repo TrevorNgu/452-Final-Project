@@ -12,15 +12,21 @@ import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
 
 class Tile extends TextureRenderable{
-    constructor(tex, evnt = null){
+    constructor(tex){
         super();
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
         this.tileEvent = new Event(evnt);
+        this.dynamic = false;
+
+        this.objTexture1 = null;
+        this.objTexture2 = null;
+
+/*         this.tileEvent = evnt;
         if (this.tileEvent != null){
             this.hasEvent = true;
-        }
+        } */
     }
 
     draw(camera){
@@ -29,6 +35,13 @@ class Tile extends TextureRenderable{
         
         //super.draw(camera);
         this.texture.draw(camera);
+
+        if(this.objTexture1 != null) {
+            this.objTexture1.draw(camera);
+        }
+        if(this.objTexture2 != null) {
+            this.objTexture2.draw(camera);
+        }
     } 
 
     update(){
@@ -44,12 +57,38 @@ class Tile extends TextureRenderable{
         return this.hasCollision;
     }
 
+    getDynamicMode() {
+        return this.dynamic;
+    }
+
+    getTexture() {
+        return this.texture;
+    }
+
     toggleEvent(){
         this.hasEvent = !this.hasEvent;
     }
 
     setEvent(evnt){
         this.tileEvent = new Event(evnt);
+    setDynamicMode(mode) {
+        this.dynamic = mode;
+    }
+
+    setFirstTextureObject(textrue) {
+        this.objTexture1 = textrue;
+    }
+
+    setSecondTextureObject(textrue) {
+        this.objTexture2 = textrue;
+    }
+
+    getFirstTextureObject() {
+        return this.objTexture1;
+    }
+
+    getSecondTextureObject() {
+        return this.objTexture2;
     }
 }
 
