@@ -47,7 +47,7 @@ class MapGrid {
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
-        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY)
 
         //Create Bounding Box and push into tileBounds
         this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
@@ -70,20 +70,73 @@ class MapGrid {
 
     moveObjectInDerection(objeIndx, xPosChenge, yPosChenge) {
         console.log(this.objectsPosArr[objeIndx]);
+        //console.log(this.objectsPosArr[objeIndx]);
         //get cureent pos
         let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
         //get new pos
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
+
         //check for colision on the new pos
         if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
             //chenge pic position 
             let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
 
+        let objNewXPos = objCurrentPos[0] + xPosChenge;
+        let objNewYPos = objCurrentPos[1] + yPosChenge;
+        //check for colision on the new pos
+        if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
+            //chenge pic position 
+            this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
+/*             let tileCenterPos = this.getCenterOfTile(objNewTilePos[0], objNewTilePos[1]);
+
             this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
             this.objectsPosArr[objeIndx] = ([objNewTilePos[0], objNewTilePos[1]]);
     
-            console.log(this.objectsPosArr[objeIndx]);
+            console.log(this.objectsPosArr[objeIndx]); */
         }
+        else if((this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getDynamicMode()))  {
+            if(!(this.tileArray[objCurrentPos[0] + xPosChenge + xPosChenge][objCurrentPos[1] + yPosChenge + yPosChenge].getCollisionMode())) {
+                //find moveble object index
+                let moveObjectIndex = this.findObjectIndexBasedOnPos(objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge);
+                
+                //move dinamic object
+                this.moveObjectPicture(moveObjectIndex, objNewXPos + xPosChenge, objNewYPos + yPosChenge);
+                //change the tile properties in the old pos
+                this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].setCollisionsMode(false);
+                this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].setDynamicMode(false);
+                //change the tile properties in the new pos
+                this.tileArray[objCurrentPos[0] + xPosChenge + xPosChenge][objCurrentPos[1] + yPosChenge + yPosChenge].setCollisionsMode(true);
+                this.tileArray[objCurrentPos[0] + xPosChenge + xPosChenge][objCurrentPos[1] + yPosChenge + yPosChenge].setDynamicMode(true);
+                //move cheracter
+                this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
+            }
+        }
+    }
+}
+
+    findObjectIndexBasedOnPos(xPos, yPos) {
+        for(let i = 0; i < this.objectsPicArr.length; i++) {
+            if((this.objectsPosArr[i][0] == xPos) && ((this.objectsPosArr[i][1] == yPos))) { //if((this.objectsPosArr[i][0]) == ([xPos, yPos])) {
+                console.log(i);
+                return i;
+            }
+        }
+        console.log("null");
+        return null;
+    }
+
+    moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { //(objeIndx, objNewXPos, objNewYPos)
+        let tileCenterPos = this.getCenterOfTile(objNewXPos, objNewYPos);
+        //let objectPic = this.tileArray[oldObjectXPos][oldObjectYPos].getFirstTextureObject();
+
+        //objectPic.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+
+        //this.tileArray[objNewXPos][objNewYPos].setFirstTextureObject(objectPic);
+        //this.tileArray[oldObjectXPos][oldObjectYPos].setFirstTextureObject(null);
+        this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
+
+        //console.log(this.objectsPosArr[objeIndx]);
     }
 
     setGridPos(x,y) {
@@ -179,6 +232,7 @@ class MapGrid {
             }
         }
         //draw objects pic
+        //draw objects
         for(let i = 0; i < this.objectsPicArr.length; i++) {
             this.objectsPicArr[i].draw(camera);
         }
@@ -192,6 +246,10 @@ class MapGrid {
 
     TranslateWCToTile() {
         return;
+    }
+
+    setDynamicModeOfTile(mode, xPos, yPos) {
+        this.tileArray[xPos][yPos].setDynamicMode(mode);
     }
 }
 
