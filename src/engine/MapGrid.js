@@ -112,6 +112,7 @@ class MapGrid {
             }
         }
     }
+}
 
     findObjectIndexBasedOnPos(xPos, yPos) {
         for(let i = 0; i < this.objectsPicArr.length; i++) {
