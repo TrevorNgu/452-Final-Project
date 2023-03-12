@@ -12,7 +12,7 @@ import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
 
 class Tile extends TextureRenderable{
-    constructor(tex){
+    constructor(tex, evnt = null){
         super();
         this.texture = tex;
         this.hasCollision = false;
@@ -71,9 +71,11 @@ class Tile extends TextureRenderable{
 
     setEvent(evnt){
         this.tileEvent = new Event(evnt);
+    }
     setDynamicMode(mode) {
         this.dynamic = mode;
     }
+    
 
     setFirstTextureObject(textrue) {
         this.objTexture1 = textrue;
