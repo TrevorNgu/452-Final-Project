@@ -28,37 +28,47 @@ class TileDoor extends Tile{
             this.hasEvent = true;
         }
 
-        const door = document.querySelector(".TileDoor");
+        //const door = document.querySelector(".TileDoor");
+
+/*         //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
+        // Add an event listener
+        document.addEventListener("name-of-event", function(e) {
+            console.log(e.detail); // Prints "Example of an event"
+        }); */
     }
 
     draw(camera){
         this.texture.draw(camera);
         //draw background tile textures 
         if(this.objTexture1 != null) {
-            this.objTexture1.draw(camera);
+            this.objTexture2.draw(camera);
         }
         if(this.objTexture2 != null) {
-            this.objTexture2.draw(camera);
+            this.objTexture1.draw(camera);
         }
     } 
 
     update() {
-        
+/*         //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
+        // Add an event listener
+        document.addEventListener("name-of-event", function(e) {
+            console.log(e.detail); // Prints "Example of an event"
+        }); */
+        console.log("aaaaaaa");
+    }
+
+    setTexture(texture) {
+        this.texture = texture;
+    }
+
+    setFirstTextureObject(textrue) {
+        this.objTexture1 = textrue;
+    }
+
+    setSecondTextureObject(textrue) {
+        this.objTexture2 = textrue;
     }
 
 }
-
-door.addEventListener("click", e => {
-    console.log("door");
-})
-
-function eventHandler(event) {
-    if (event.type === "DoorOpen") {
-      /* handle a full screen toggle */
-      console.log("Door");
-    } else {
-      /* handle a full screen toggle error */
-    }
-  }
 
 export default Tile;

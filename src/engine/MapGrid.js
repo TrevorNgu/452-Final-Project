@@ -2,6 +2,7 @@
 import engine from "../engine/index.js";
 
 import Tile from "../engine/renderables/Tile.js";
+import TileDoor from "../engine/renderables/TileDoor.js";
 import BoundingBox from "./bounding_box.js";
 
 class MapGrid {
@@ -39,8 +40,76 @@ class MapGrid {
 
         this.movmentSpeed = 1;
         this.movementSmoothInxed = 30;
+
+        //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
+        // Create the event
+        this.event = new CustomEvent("door", { "detail": "Example of an event" });
+
+        this.gridColor = [0,0,0,0];
     }
 
+    setGridColor(color) {
+        this.gridColor = color;
+    }
+
+    setTileDoor(tilePic, closedPic = null, openPic = null, xPos, yPos) {
+        let newTileClosedPic;
+        let newTileOpenPic;
+
+        let tilePicBG;
+
+        if(closedPic == null) {
+            newTileClosedPic = new engine.SpriteRenderable(this.tilePic);
+        }
+        else {
+            newTileClosedPic = new engine.SpriteRenderable(closedPic);
+        }
+        if(openPic == null) {
+            newTileOpenPic = new engine.SpriteRenderable(this.tilePic);
+        }
+        else {
+            newTileOpenPic = new engine.SpriteRenderable(openPic);
+        }
+        tilePicBG = new engine.SpriteRenderable(tilePic);
+
+
+        newTileClosedPic.setColor([0, 0, 0, 0.0]);
+        newTileClosedPic.getXform().setSize(this.tileWidth, this.tileHight);
+
+        //set new picture pos
+        let tileCenterPos = this.getCenterOfTile(xPos, yPos);
+        newTileClosedPic.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+
+
+
+        newTileOpenPic.setColor([0, 0, 0, 0.0]);
+        newTileOpenPic.getXform().setSize(this.tileWidth, this.tileHight);
+/* 
+        newTileOpenPic.setColor([0, 0, 0, 0.0]);
+        newTileOpenPic.getXform().setSize(this.tileWidth, this.tileHight); */
+
+        newTileOpenPic.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY); 
+
+
+
+
+        tilePicBG.setColor(this.gridColor);
+        tilePicBG.getXform().setSize(this.tileWidth, this.tileHight);
+
+        //set new picture pos
+        tilePicBG.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+
+
+        
+        this.tileArray[xPos][yPos] = new TileDoor(tilePicBG);
+
+        this.tileArray[xPos][yPos].setEvent("door");
+        console.log(closedPic);
+        this.tileArray[xPos][yPos].setFirstTextureObject(newTileClosedPic);
+        this.tileArray[xPos][yPos].setSecondTextureObject(newTileOpenPic);
+
+        //this.tileArray[xPos][yPos].update();
+    }
 
     createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
         //created object pic
@@ -173,17 +242,28 @@ class MapGrid {
         this.mXPos = xPos;
         this.mYPos = yPos;
     }
+
+    tilesUpdate() {
+        for(let i = 0 ; i < this.mWidth; i++) {
+            for(let n = 0; n < this.mHeight; n++) {
+                this.tileArray[n][i].update();
+            }
+        }
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     update() {
-
-        //console.log("character: " + this.tileBounds[0].getPosition());
-        //console.log("dog: " + this.tileBounds[1].getPosition());
         if (this.tileBounds[0].intersectsBound(this.tileBounds[6])){
-            //console.log("Woof");
+
+            //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
+            // Dispatch/Trigger/Fire the event
+            document.dispatchEvent(this.event);
+
         }
         else {
             //console.log("false");
         }
+
+        this.tilesUpdate();
     }
 
     setTile (tile, width, hight) {
@@ -207,7 +287,7 @@ class MapGrid {
                 //create picures for tiles
                 let newTile = new engine.SpriteRenderable(this.tilePic);
 
-                newTile.setColor([0, 1, 0, 0.8]);
+                newTile.setColor(this.gridColor);
                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
                 //set new picture pos
                 let tileCenterPos = this.getCenterOfTile(i, j);

@@ -24,6 +24,8 @@ class MyGame extends engine.Scene {
         this.mBushPic = "assets/Bush.png";
         this.mDogPic = "assets/Dog.png";
         this.mBoxPic = "assets/box.png";
+        this.mDoorClosedPic = "assets/DoorClosed.png";
+        this.mDoorOpenPic = "assets/DoorOpen.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -40,6 +42,7 @@ class MyGame extends engine.Scene {
         this.mTheta = 0;
 
         this.mGrid = null;
+
     }
 
     load() {
@@ -55,6 +58,8 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.mBushPic);
         engine.texture.load(this.mDogPic);
         engine.texture.load(this.mBoxPic);
+        engine.texture.load(this.mDoorClosedPic);
+        engine.texture.load(this.mDoorOpenPic);
     }
 
     unload() {
@@ -67,9 +72,11 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.mTilePic);
         engine.texture.unload(this.mCharacterPic);
         engine.texture.unload(this.mBlockPic);
-        engine.texture.load(this.mBushPic);
-        engine.texture.load(this.mDogPic);
-        engine.texture.load(this.mBoxPic);
+        engine.texture.unload(this.mBushPic);
+        engine.texture.unload(this.mDogPic);
+        engine.texture.unload(this.mBoxPic);
+        engine.texture.unload(this.mDoorClosedPic);
+        engine.texture.unload(this.mDoorOpenPic);
     }
 
     init() {
@@ -84,6 +91,7 @@ class MyGame extends engine.Scene {
         this.mGrid = new engine.MapGrid(8,8);
         this.mGrid.setGridPos(27,16);
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
+        this.mGrid.setGridColor([0, 1, 0, 0.8]);
         this.mGrid.createTilePicturesForGrid();
         this.mGrid.createObject(this.mCharacterPic, 2,3);
         this.mGrid.createObject(this.mBushPic, 2,2);
@@ -108,6 +116,10 @@ class MyGame extends engine.Scene {
         this.mGrid.createObject(this.mBoxPic, 3,5);
         this.mGrid.setTileCollisionMode(true, 3,5);
         this.mGrid.setDynamicModeOfTile(true, 3,5);
+
+        this.mGrid.setTileDoor(this.mDefaultTilePic, this.mDoorClosedPic, this.mDoorOpenPic,7,7);
+
+        
 
 
         // Step A: set up the cameras
@@ -160,6 +172,16 @@ class MyGame extends engine.Scene {
     // The Update function, updates the application state. Make sure to _NOT_ draw
     // anything from this function!
     update() {
+
+
+        
+/*         // Create the event
+        var event = new CustomEvent("name-of-event", { "detail": "Example of an event" });
+        
+        // Dispatch/Trigger/Fire the event
+        document.dispatchEvent(event); */
+
+
         this.mGrid.update();
 
         let once = false;

@@ -17,7 +17,7 @@ class Tile extends TextureRenderable{
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
-        this.tileEvent = new Event(evnt);
+        this.tileEvent = "";//new Event(evnt);
         this.dynamic = false;
 
         this.objTexture1 = null;
@@ -26,28 +26,25 @@ class Tile extends TextureRenderable{
         if (this.tileEvent != null){
             this.hasEvent = true;
         }
-
-
-        const door = document.querySelector(".Tile");
+/*         document.addEventListener("name-of-event", function(e) {
+            console.log(e.detail); // Prints "Example of an event"
+        }); */
     }
 
     draw(camera){
         this.texture.draw(camera);
         //draw background tile textures 
         if(this.objTexture1 != null) {
-            this.objTexture1.draw(camera);
-        }
-        if(this.objTexture2 != null) {
             this.objTexture2.draw(camera);
         }
+        if(this.objTexture2 != null) {
+            this.objTexture1.draw(camera);
+        }
+        //this.texture.draw(camera);
     } 
 
     update(){
-        //Pixel-Touch Activation
 
-        door.addEventListener("click", e => {
-            console.log("door");
-        })
     }
 
     setCollisionsMode(mode){
@@ -71,10 +68,19 @@ class Tile extends TextureRenderable{
     }
 
     setEvent(evnt){
-        this.tileEvent = new Event(evnt);
+        this.tileEvent = evnt;//new Event(evnt);
+        //const door = document.querySelector(".Tile");
+        //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
+        document.addEventListener( this.tileEvent, function(e) {
+            console.log(e.detail); // Prints "Example of an event"
+        });
     }
     setDynamicMode(mode) {
         this.dynamic = mode;
+    }
+
+    setTexture(texture) {
+        this.texture = texture;
     }
 
     setFirstTextureObject(textrue) {
