@@ -30,6 +30,12 @@ class BoundingBox {
         this.mLL[1] = centerPos[1] - (h / 2);
     }
 
+    setPosition(pos){
+        this.mLL[0] = pos[0];
+        this.mLL[1] = pos[1];
+        console.log("Box: " + this.mLL[0] + ", " + this.mLL[1]);
+    }
+
     containsPoint(x, y) {
         return ((x > this.minX()) && (x < this.maxX()) &&
             (y > this.minY()) && (y < this.maxY()));
