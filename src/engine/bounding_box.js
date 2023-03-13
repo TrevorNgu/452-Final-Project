@@ -24,10 +24,10 @@ class BoundingBox {
     // rotation is ignored.
     // centerPos is a vec2
     setBounds(centerPos, w, h) {
-        this.mWidth = w;
-        this.mHeight = h;
-        this.mLL[0] = centerPos[0] - (w / 2);
-        this.mLL[1] = centerPos[1] - (h / 2);
+        this.mWidth = w/2;
+        this.mHeight = h/2;
+        this.mLL[0] = centerPos[0]; 
+        this.mLL[1] = centerPos[1]; 
     }
 
     setPosition(pos){
@@ -42,10 +42,10 @@ class BoundingBox {
     }
 
     intersectsBound(otherBound) {
-        return ((this.minX() < otherBound.maxX()) &&
-            (this.maxX() > otherBound.minX()) &&
-            (this.minY() < otherBound.maxY()) &&
-            (this.maxY() > otherBound.minY()));
+        return ((this.minX() <= otherBound.maxX()) &&
+            (this.maxX() >= otherBound.minX()) &&
+            (this.minY() <= otherBound.maxY()) &&
+            (this.maxY() >= otherBound.minY()));
     }
 
     // returns the status of otherBound wrt to this.
@@ -73,6 +73,10 @@ class BoundingBox {
             }
         }
         return status;
+    }
+
+    getPosition() {
+        return this.mLL;
     }
 
     minX() { return this.mLL[0]; }

@@ -27,7 +27,6 @@ class MapGrid {
 
         this.objectPic = null;
 
-
         for(let i = 0; i < height; i++) {
             this.mArray[i] = [];
             for(let j = 0; j < width; j++) {
@@ -46,19 +45,14 @@ class MapGrid {
         newObject.setColor([0, 0, 0, 0]);
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos); //Retrieves Position in WC
-        console.log(tileCenterPos);
+
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-        console.log(xPos + ", " + yPos);
-        //Create Bounding Box and push into tileBounds
-        this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
-        this.tileBounds.push(this.tileBox);
 
         //push to the array of object.
         this.objectsPicArr.push(newObject);
         this.objectsPosArr.push([xPos, yPos]);
-
-
+        console.log(tileCenterPos);
         //Create Bounding Box and push into tileBounds
         this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
         this.tileBounds.push(this.tileBox);
@@ -105,8 +99,7 @@ class MapGrid {
                 this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
             }
         }
-        console.log("AAAA");
-        console.log((this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getDynamicMode()));
+
     }
 
     findObjectIndexBasedOnPos(xPos, yPos) {
@@ -124,9 +117,8 @@ class MapGrid {
         let tileCenterPos = this.getCenterOfTile(objNewXPos, objNewYPos);
         this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
         this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
-        //Move Correlating Bounding Box
+
         this.tileBounds[objeIndx].setPosition(tileCenterPos);
-        //console.log(this.objectsPosArr[objeIndx]);
     }
 
     setGridPos(x,y) {
@@ -164,12 +156,14 @@ class MapGrid {
     }
 
     update() {
-        for (let i = 0; i < this.tileBounds.length; i++){
-            //Character index = 0
-            //Dog index is 6
-            if (this.tileBounds[0].intersectsBound(this.tileBounds[6])){
-                console.log("Woof");
-            }
+
+        console.log("character: " + this.tileBounds[0].getPosition());
+        console.log("dog: " + this.tileBounds[1].getPosition());
+        if (this.tileBounds[0].intersectsBound(this.tileBounds[1])){
+            console.log("Woof");
+        }
+        else {
+            console.log("false");
         }
     }
 

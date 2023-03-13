@@ -86,28 +86,28 @@ class MyGame extends engine.Scene {
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
         this.mGrid.createTilePicturesForGrid();
         this.mGrid.createObject(this.mCharacterPic, 2,3);
-        this.mGrid.createObject(this.mBushPic, 2,2);
-        this.mGrid.setTileCollisionMode(true, 2,2);
+/*         this.mGrid.createObject(this.mBushPic, 2,2);
+        this.mGrid.setTileCollisionMode(true, 2,2); */
         
 
-        this.mGrid.createObject(this.mBushPic, 0,2);
+/*         this.mGrid.createObject(this.mBushPic, 0,2);
         this.mGrid.setTileCollisionMode(true, 0,2);
         this.mGrid.createObject(this.mBushPic, 0,3);
         this.mGrid.setTileCollisionMode(true, 0,3);
         this.mGrid.createObject(this.mBushPic, 3,4);
         this.mGrid.setTileCollisionMode(true, 3,4);
         this.mGrid.createObject(this.mBushPic, 4,0);
-        this.mGrid.setTileCollisionMode(true, 4,0);
+        this.mGrid.setTileCollisionMode(true, 4,0); */
         this.mGrid.createObject(this.mDogPic, 1,1);
         this.mGrid.setTileCollisionMode(false, 1,1);
 
-        this.mGrid.createObject(this.mBoxPic, 3,3);
+/*         this.mGrid.createObject(this.mBoxPic, 3,3);
         this.mGrid.setTileCollisionMode(true, 3,3);
         this.mGrid.setDynamicModeOfTile(true, 3,3);
 
         this.mGrid.createObject(this.mBoxPic, 3,5);
         this.mGrid.setTileCollisionMode(true, 3,5);
-        this.mGrid.setDynamicModeOfTile(true, 3,5);
+        this.mGrid.setDynamicModeOfTile(true, 3,5); */
 
 
         // Step A: set up the cameras
