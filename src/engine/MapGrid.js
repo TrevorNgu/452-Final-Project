@@ -173,16 +173,16 @@ class MapGrid {
         this.mXPos = xPos;
         this.mYPos = yPos;
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
     update() {
 
-        console.log("character: " + this.tileBounds[0].getPosition());
-        console.log("dog: " + this.tileBounds[1].getPosition());
+        //console.log("character: " + this.tileBounds[0].getPosition());
+        //console.log("dog: " + this.tileBounds[1].getPosition());
         if (this.tileBounds[0].intersectsBound(this.tileBounds[6])){
-            console.log("Woof");
+            //console.log("Woof");
         }
         else {
-            console.log("false");
+            //console.log("false");
         }
     }
 

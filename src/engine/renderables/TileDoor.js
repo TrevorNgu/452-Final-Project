@@ -10,8 +10,9 @@ import * as glSys from "../core/gl.js";
 import TextureRenderable from "./renderable.js";
 import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
+import Tile from "./Tile.js";
 
-class Tile extends TextureRenderable{
+class TileDoor extends Tile{
     constructor(tex, evnt = null){
         super();
         this.texture = tex;
@@ -27,8 +28,7 @@ class Tile extends TextureRenderable{
             this.hasEvent = true;
         }
 
-
-        const door = document.querySelector(".Tile");
+        const door = document.querySelector(".TileDoor");
     }
 
     draw(camera){
@@ -42,56 +42,23 @@ class Tile extends TextureRenderable{
         }
     } 
 
-    update(){
-        //Pixel-Touch Activation
-
-        door.addEventListener("click", e => {
-            console.log("door");
-        })
+    update() {
+        
     }
 
-    setCollisionsMode(mode){
-        this.hasCollision = mode;
-    }
-
-    getCollisionMode() {
-        return this.hasCollision;
-    }
-
-    getDynamicMode() {
-        return this.dynamic;
-    }
-
-    getTexture() {
-        return this.texture;
-    }
-
-    toggleEvent(){
-        this.hasEvent = !this.hasEvent;
-    }
-
-    setEvent(evnt){
-        this.tileEvent = new Event(evnt);
-    }
-    setDynamicMode(mode) {
-        this.dynamic = mode;
-    }
-
-    setFirstTextureObject(textrue) {
-        this.objTexture1 = textrue;
-    }
-
-    setSecondTextureObject(textrue) {
-        this.objTexture2 = textrue;
-    }
-
-    getFirstTextureObject() {
-        return this.objTexture1;
-    }
-
-    getSecondTextureObject() {
-        return this.objTexture2;
-    }
 }
+
+door.addEventListener("click", e => {
+    console.log("door");
+})
+
+function eventHandler(event) {
+    if (event.type === "DoorOpen") {
+      /* handle a full screen toggle */
+      console.log("Door");
+    } else {
+      /* handle a full screen toggle error */
+    }
+  }
 
 export default Tile;
