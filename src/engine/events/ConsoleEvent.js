@@ -15,7 +15,7 @@ class ConsoleEvent extends Event {
     }
 
     activate(){
-        console.log("Event Triggered");
+        console.log(this.message);
     }
 
     setMessage(msg) {

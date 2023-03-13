@@ -12,7 +12,6 @@ class Event {
             throw new Error("Can't instantiate abstract");
         }
         this.type = 'event';
-
     }
 
     activate(){

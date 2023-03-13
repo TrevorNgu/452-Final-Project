@@ -36,7 +36,11 @@ class MapGrid {
 
         this.mXPos = 0;
         this.mYPos = 0;
+
+        this.movmentSpeed = 1;
+        this.movementSmoothInxed = 30;
     }
+
 
     createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
         //created object pic
@@ -115,10 +119,25 @@ class MapGrid {
 
     moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { //(objeIndx, objNewXPos, objNewYPos)
         let tileCenterPos = this.getCenterOfTile(objNewXPos, objNewYPos);
-        this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.MovePictureSomoothly(objeIndx, [tileCenterPos[0], tileCenterPos[1]]);
+        //this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
         this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
 
         this.tileBounds[objeIndx].setPosition(tileCenterPos);
+    }
+
+    async MovePictureSomoothly(objeIndx, newPos) {
+        let oldPosObj = this.objectsPosArr[objeIndx];
+        let oldPos = this.getCenterOfTile(oldPosObj[0], oldPosObj[1]);
+        let posChange = [newPos[0] - oldPos[0], newPos[1] - oldPos[1]];
+        let posChangeFraction = [posChange[0] / this.movementSmoothInxed, posChange[1] / this.movementSmoothInxed];
+
+        for(let i = 0; i < this.movementSmoothInxed; i++) {
+            await sleep(10);
+            this.objectsPicArr[objeIndx].getXform().setPosition
+            ((oldPos[0] + (posChangeFraction[0] * i)) + this.gridPosX,
+             (oldPos[1] + (posChangeFraction[1] * i)) + this.gridPosY);
+        }
     }
 
     setGridPos(x,y) {
@@ -159,7 +178,7 @@ class MapGrid {
 
         console.log("character: " + this.tileBounds[0].getPosition());
         console.log("dog: " + this.tileBounds[1].getPosition());
-        if (this.tileBounds[0].intersectsBound(this.tileBounds[1])){
+        if (this.tileBounds[0].intersectsBound(this.tileBounds[6])){
             console.log("Woof");
         }
         else {
@@ -229,6 +248,11 @@ class MapGrid {
     setDynamicModeOfTile(mode, xPos, yPos) {
         this.tileArray[xPos][yPos].setDynamicMode(mode);
     }
+}
+
+//Reference: https://www.youtube.com/watch?v=N8ONAZSsx80
+async function sleep(seconds) {
+    return new Promise((resolve => setTimeout(resolve, seconds)));
 }
 
 export default MapGrid;

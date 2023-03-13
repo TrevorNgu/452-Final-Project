@@ -86,28 +86,28 @@ class MyGame extends engine.Scene {
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
         this.mGrid.createTilePicturesForGrid();
         this.mGrid.createObject(this.mCharacterPic, 2,3);
-/*         this.mGrid.createObject(this.mBushPic, 2,2);
-        this.mGrid.setTileCollisionMode(true, 2,2); */
+        this.mGrid.createObject(this.mBushPic, 2,2);
+        this.mGrid.setTileCollisionMode(true, 2,2);
         
 
-/*         this.mGrid.createObject(this.mBushPic, 0,2);
+        this.mGrid.createObject(this.mBushPic, 0,2);
         this.mGrid.setTileCollisionMode(true, 0,2);
         this.mGrid.createObject(this.mBushPic, 0,3);
         this.mGrid.setTileCollisionMode(true, 0,3);
         this.mGrid.createObject(this.mBushPic, 3,4);
         this.mGrid.setTileCollisionMode(true, 3,4);
         this.mGrid.createObject(this.mBushPic, 4,0);
-        this.mGrid.setTileCollisionMode(true, 4,0); */
+        this.mGrid.setTileCollisionMode(true, 4,0);
         this.mGrid.createObject(this.mDogPic, 1,1);
         this.mGrid.setTileCollisionMode(false, 1,1);
 
-/*         this.mGrid.createObject(this.mBoxPic, 3,3);
+        this.mGrid.createObject(this.mBoxPic, 3,3);
         this.mGrid.setTileCollisionMode(true, 3,3);
         this.mGrid.setDynamicModeOfTile(true, 3,3);
 
         this.mGrid.createObject(this.mBoxPic, 3,5);
         this.mGrid.setTileCollisionMode(true, 3,5);
-        this.mGrid.setDynamicModeOfTile(true, 3,5); */
+        this.mGrid.setDynamicModeOfTile(true, 3,5);
 
 
         // Step A: set up the cameras
@@ -169,38 +169,7 @@ class MyGame extends engine.Scene {
         let xdelta = 0.3;
         let delta = 0.005;
         let xform = this.mTest.getXform();
-/*         if (engine.input.isKeyPressed(engine.input.keys.Up)) {
-            if (engine.input.isKeyPressed(engine.input.keys.Shift))
-                this.mH += delta;
-            else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mV += delta;
-            else xform.incYPosBy(xdelta);
-            once = true;
-        }
-        if (engine.input.isKeyPressed(engine.input.keys.Down)) {
-            if (engine.input.isKeyPressed(engine.input.keys.Shift))
-                this.mH -= delta;
-            else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mV -= delta;
-            else xform.incYPosBy(-xdelta);
-            once = true;
-        }
-        if (engine.input.isKeyPressed(engine.input.keys.Right)) {
-            if (engine.input.isKeyPressed(engine.input.keys.Shift))
-                this.mW += delta;
-            else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mU += delta;
-            else xform.incXPosBy(xdelta);
-            once = true;
-        }
-        if (engine.input.isKeyPressed(engine.input.keys.Left)) {
-            if (engine.input.isKeyPressed(engine.input.keys.Shift))
-                this.mW -= delta;
-            else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mU -= delta;
-            else xform.incXPosBy(-xdelta);
-            once = true;
-        } */
+
         if (once) {
             this.mTest.setSecondTexture(this.mU, this.mV, this.mW, this.mH, this.mTheta);    
             this.mMsg.setText("At:(" 
