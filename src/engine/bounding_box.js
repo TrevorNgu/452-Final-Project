@@ -30,9 +30,9 @@ class BoundingBox {
         this.mLL[1] = centerPos[1] - (h / 2);
     }
 
-    setPosition(x, y){
-        this.mLL[0] = x;
-        this.mLL[1] = y;
+    setPosition(pos){
+        this.mLL[0] = pos[0];
+        this.mLL[1] = pos[1];
         console.log("Box: " + this.mLL[0] + ", " + this.mLL[1]);
     }
 

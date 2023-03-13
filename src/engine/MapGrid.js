@@ -39,16 +39,17 @@ class MapGrid {
         this.mYPos = 0;
     }
 
-    createObject(objectPic, xPos, yPos) {
+    createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
         //created object pic
         this.objectPic = objectPic;
         let newObject= new engine.SpriteRenderable(this.objectPic);
         newObject.setColor([0, 0, 0, 0]);
         //set pic position
-        let tileCenterPos = this.getCenterOfTile(xPos, yPos);
+        let tileCenterPos = this.getCenterOfTile(xPos, yPos); //Retrieves Position in WC
+        console.log(tileCenterPos);
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-
+        console.log(xPos + ", " + yPos);
         //Create Bounding Box and push into tileBounds
         this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
         this.tileBounds.push(this.tileBox);
@@ -136,7 +137,7 @@ class MapGrid {
         this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
         this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
         //Move Correlating Bounding Box
-        this.tileBounds[objeIndx].setPosition(this.objectsPosArr[objeIndx][0], this.objectsPosArr[objeIndx][1]);
+        this.tileBounds[objeIndx].setPosition(tileCenterPos);
         //console.log(this.objectsPosArr[objeIndx]);
     }
 
