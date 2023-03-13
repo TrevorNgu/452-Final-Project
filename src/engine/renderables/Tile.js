@@ -23,19 +23,14 @@ class Tile extends TextureRenderable{
         this.objTexture1 = null;
         this.objTexture2 = null;
 
-/*         this.tileEvent = evnt;
         if (this.tileEvent != null){
             this.hasEvent = true;
-        } */
+        }
     }
 
     draw(camera){
-        // activate the texture
-        //texture.activate(this.mTexture, glSys.get().TEXTURE0);
-        
-        //super.draw(camera);
         this.texture.draw(camera);
-
+        //draw background tile textures 
         if(this.objTexture1 != null) {
             this.objTexture1.draw(camera);
         }
@@ -49,7 +44,6 @@ class Tile extends TextureRenderable{
     }
 
     setCollisionsMode(mode){
-        //this.hasCollision = !this.hasCollision;
         this.hasCollision = mode;
     }
 
