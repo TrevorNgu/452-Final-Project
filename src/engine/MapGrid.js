@@ -164,7 +164,13 @@ class MapGrid {
     }
 
     update() {
-        return;
+        for (let i = 0; i < this.tileBounds.length; i++){
+            //Character index = 0
+            //Dog index is 6
+            if (this.tileBounds[0].intersectsBound(this.tileBounds[6])){
+                console.log("Woof");
+            }
+        }
     }
 
     setTile (tile, width, hight) {

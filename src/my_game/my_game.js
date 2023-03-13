@@ -99,7 +99,7 @@ class MyGame extends engine.Scene {
         this.mGrid.createObject(this.mBushPic, 4,0);
         this.mGrid.setTileCollisionMode(true, 4,0);
         this.mGrid.createObject(this.mDogPic, 1,1);
-        this.mGrid.setTileCollisionMode(true, 1,1);
+        this.mGrid.setTileCollisionMode(false, 1,1);
 
         this.mGrid.createObject(this.mBoxPic, 3,3);
         this.mGrid.setTileCollisionMode(true, 3,3);
@@ -160,6 +160,8 @@ class MyGame extends engine.Scene {
     // The Update function, updates the application state. Make sure to _NOT_ draw
     // anything from this function!
     update() {
+        this.mGrid.update();
+
         let once = false;
 
         this.mHero.update();
