@@ -6,6 +6,8 @@ import Tile from "../engine/renderables/Tile.js";
 
 import Hero from "./hero.js";
 import UpperEngine from "./upper_engine.js";
+import Weapons from "./weapons.js";
+import Storage from "./storage.js";
 
 // potential texture: https://www.pngall.com/spot-light-png/download/68214
 
@@ -20,13 +22,11 @@ class MyGame extends engine.Scene {
 
         this.mDefaultTilePic = "assets/tileDefPic.png";
         this.mTilePic = "assets/tilePic.png";
-        this.mCharacterPic = "assets/character2.png";
-        this.mBlockPic = "assets/character4.png";
-        this.mBushPic = "assets/Bush.png";
-        this.mDogPic = "assets/Dog.png";
-        this.mBoxPic = "assets/box.png";
 
         this.mCrew = "assets/hero.png";
+
+        this.mMogusX = 6;
+        this.mMogusY = 2;
 
         // The camera to view the scene
         this.mCamera = null;
@@ -67,35 +67,28 @@ class MyGame extends engine.Scene {
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
         this.mGrid.createTilePicturesForGrid();
         this.mGrid.setGridColor([.1, .1, .1, .8]);
-        this.mGrid.createObject(this.mCrew, 1, 3);
+        this.mGrid.createObject(this.mCrew, this.mMogusX, this.mMogusY);
 
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 1, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 1, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 2, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 2, [.4, .4, .4, .8]);
-
-
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 6, 0, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 1, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 2, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 5, 0, [.4, .4, .4, .8]);
-
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 6, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 6, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 7, 5, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 5, 7, [.4, .4, .4, .8]);
-
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 1, 7, [.4, .4, .4, .8]);
-        this.mGrid.createObject(this.mDefaultTilePic, 0, 6, [.4, .4, .4, .8]);
+        for(let i = 0; i < 8; i++) {
+            this.mGrid.createObject(this.mDefaultTilePic, 0, i, [.4, .4, .4, .8]);
+            this.mGrid.createObject(this.mDefaultTilePic, i, 7, [.4, .4, .4, .8]);
+            this.mGrid.createObject(this.mDefaultTilePic, 7, i, [.4, .4, .4, .8]);
+            this.mGrid.createObject(this.mDefaultTilePic, i, 0, [.4, .4, .4, .8]);
+        }
 
         this.mGrid.createObject(this.mDefaultTilePic, 3, 4, [0, 0, .8, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 4, 4, [0, 0, .8, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 3, 3, [0, 0, .8, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 4, 3, [0, 0, .8, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 3, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 4, [.2, .2, 0, .8]);  
+
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 3, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 4, [.2, .2, 0, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 3, 0, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 4, 0, [.2, .2, 0, .8]);
 
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(
@@ -129,6 +122,14 @@ class MyGame extends engine.Scene {
     // anything from this function!
     update() {
         this.objectControler();
+
+        if(this.mGrid.checkObjectPosition(0, 0, 3) || this.mGrid.checkObjectPosition(0, 0, 4)) {
+            this.nextUpperEngine();
+        } else if(this.mGrid.checkObjectPosition(0, 7, 3) || this.mGrid.checkObjectPosition(0, 7, 4)) {
+            this.nextWeapons();
+        } else if(this.mGrid.checkObjectPosition(0, 3, 0) || this.mGrid.checkObjectPosition(0, 4, 0)) {
+            this.nextStorage();
+        }
     }
 
     objectControler() {
@@ -152,14 +153,33 @@ class MyGame extends engine.Scene {
 
     }
     
-    next() {
+    nextUpperEngine() {
         super.next();
         let nextLevel = new UpperEngine();
+        nextLevel.setMogusPos(6, 3);
         nextLevel.start();
     }
 
-}
+    nextStorage() {
+        super.next();
+        let nextLevel = new Storage();
+        nextLevel.setMogusPos(3, 6);
+        nextLevel.start();
+    }
 
+    nextWeapons() {
+        super.next();
+        let nextLevel = new Weapons();
+        nextLevel.setMogusPos(1, 3);
+        nextLevel.start();
+    }
+
+    setMogusPos(xPos, yPos) {
+        this.mMogusX = xPos;
+        this.mMogusY = yPos;
+    }
+
+}
 
 window.onload = function () {
     engine.init("GLCanvas");

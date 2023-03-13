@@ -21,10 +21,11 @@ class Weapons extends engine.Scene {
 
         this.mDefaultTilePic = "assets/tileDefPic.png";
         this.mTilePic = "assets/tilePic.png";
-        this.mCharacterPic = "assets/character2.png";
-        this.mBlockPic = "assets/character4.png";
-        this.mBushPic = "assets/Bush.png";
-        this.mDogPic = "assets/Dog.png";
+
+        this.mCrew = "assets/hero.png";
+
+        this.mMogusX = 6;
+        this.mMogusY = 2;
 
         // The camera to view the scene
         this.mCamera = null;
@@ -44,27 +45,19 @@ class Weapons extends engine.Scene {
     }
 
     load() {
-        engine.texture.load(this.kMinionSprite);
-        engine.texture.load(this.kUp);
-        engine.texture.load(this.kTest);
-        engine.texture.load(this.kBg);
-
         engine.texture.load(this.mDefaultTilePic);
         engine.texture.load(this.mTilePic);
-        engine.texture.load(this.mCharacterPic);
-        engine.texture.load(this.mBlockPic);
+
+        engine.texture.load(this.kBg);
+        engine.texture.load(this.mCrew);
     }
 
     unload() {
-        engine.texture.unload(this.kMinionSprite);
-        engine.texture.unload(this.kUp);
-        engine.texture.unload(this.KTest);
-        engine.texture.unload(this.kBg);
-
         engine.texture.unload(this.mDefaultTilePic);
         engine.texture.unload(this.mTilePic);
-        engine.texture.unload(this.mCharacterPic);
-        engine.texture.unload(this.mBlockPic);
+
+        engine.texture.unload(this.kBg);
+        engine.texture.unload(this.mCrew);
     }
 
     init() {
@@ -72,13 +65,46 @@ class Weapons extends engine.Scene {
         this.mGrid.setGridPos(27,16);
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
         this.mGrid.createTilePicturesForGrid();
-        this.mGrid.createObject(this.mCharacterPic, 2,3);
-        this.mGrid.createObject(this.mBushPic, 2,2);
-        this.mGrid.setTileCollisionMode(true, 2,2);
-        
-        this.mGrid.addTile(4, 5, this.mDefaultTilePic);
-        this.mGrid.setGridColor([1, 0, 1, 1]);
+        this.mGrid.setGridColor([.1, .1, .1, .8]);
+        this.mGrid.createObject(this.mCrew, this.mMogusX, this.mMogusY);
 
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 0, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 1, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 1, 0, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 2, 0, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 2, [.4, .4, .4, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 0, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 6, 0, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 1, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 2, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 5, 0, [.4, .4, .4, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 7, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 6, 7, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 6, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 5, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 5, 7, [.4, .4, .4, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 7, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 1, 7, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 6, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 5, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 2, 7, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 3, 7, [.4, .4, .4, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 4, 7, [.4, .4, .4, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 3, 4, [0, 0, .8, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 4, 4, [0, 0, .8, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 3, 3, [0, 0, .8, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 4, 3, [0, 0, .8, .8]);
+
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 3, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 0, 4, [.2, .2, 0, .8]);        
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 3, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 7, 4, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 3, 0, [.2, .2, 0, .8]);
+        this.mGrid.createObject(this.mDefaultTilePic, 4, 0, [.2, .2, 0, .8]);
 
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(
@@ -92,6 +118,7 @@ class Weapons extends engine.Scene {
         this.mBg = new engine.TextureRenderable(this.kBg);
         this.mBg.getXform().setSize(150, 150);
         this.mBg.getXform().setPosition(50, 40);
+
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more
@@ -139,9 +166,12 @@ class Weapons extends engine.Scene {
         
         let nextLevel = new MyGame();
         nextLevel.start();
-
     }
 
+    setMogusPos(xPos, yPos) {
+        this.mMogusX = xPos;
+        this.mMogusY = yPos;
+    }
 }
 
 export default Weapons;
