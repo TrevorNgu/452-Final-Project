@@ -26,6 +26,7 @@ class MyGame extends engine.Scene {
         this.mBoxPic = "assets/box.png";
         this.mDoorClosedPic = "assets/DoorClosed.png";
         this.mDoorOpenPic = "assets/DoorOpen.png";
+        this.mButtonPic = "assets/Button.png";
 
         // The camera to view the scene
         this.mCamera = null;
@@ -60,6 +61,7 @@ class MyGame extends engine.Scene {
         engine.texture.load(this.mBoxPic);
         engine.texture.load(this.mDoorClosedPic);
         engine.texture.load(this.mDoorOpenPic);
+        engine.texture.load(this.mButtonPic);
     }
 
     unload() {
@@ -77,6 +79,7 @@ class MyGame extends engine.Scene {
         engine.texture.unload(this.mBoxPic);
         engine.texture.unload(this.mDoorClosedPic);
         engine.texture.unload(this.mDoorOpenPic);
+        engine.texture.unload(this.mButtonPic);
     }
 
     init() {
@@ -106,7 +109,7 @@ class MyGame extends engine.Scene {
         this.mGrid.setTileCollisionMode(true, 3,4);
         this.mGrid.createObject(this.mBushPic, 4,0);
         this.mGrid.setTileCollisionMode(true, 4,0);
-        this.mGrid.createObject(this.mDogPic, 1,1);
+        this.mGrid.createObject(this.mButtonPic, 1,1);
         this.mGrid.setTileCollisionMode(false, 1,1);
 
         this.mGrid.createObject(this.mBoxPic, 3,3);
@@ -117,7 +120,7 @@ class MyGame extends engine.Scene {
         this.mGrid.setTileCollisionMode(true, 3,5);
         this.mGrid.setDynamicModeOfTile(true, 3,5);
 
-        this.mGrid.setTileDoor(this.mDefaultTilePic, this.mDoorClosedPic, this.mDoorOpenPic,7,7);
+        this.mGrid.setTileDoor(this.mDefaultTilePic, this.mDoorClosedPic, this.mDoorOpenPic,1,4);
 
         
 

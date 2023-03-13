@@ -71,9 +71,9 @@ class Tile extends TextureRenderable{
         this.tileEvent = evnt;//new Event(evnt);
         //const door = document.querySelector(".Tile");
         //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
-        document.addEventListener( this.tileEvent, function(e) {
+ /*        document.addEventListener( this.tileEvent, function(e) {
             console.log(e.detail); // Prints "Example of an event"
-        });
+        }); */
     }
     setDynamicMode(mode) {
         this.dynamic = mode;

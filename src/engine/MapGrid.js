@@ -41,9 +41,12 @@ class MapGrid {
         this.movmentSpeed = 1;
         this.movementSmoothInxed = 30;
 
+        this.doorArray = [];
+
         //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
         // Create the event
-        this.event = new CustomEvent("door", { "detail": "Example of an event" });
+        this.event = new CustomEvent("door", { "detail": {
+        "Reference" : this.doorArray }});
 
         this.gridColor = [0,0,0,0];
     }
@@ -108,6 +111,7 @@ class MapGrid {
         this.tileArray[xPos][yPos].setFirstTextureObject(newTileClosedPic);
         this.tileArray[xPos][yPos].setSecondTextureObject(newTileOpenPic);
 
+        this.doorArray.push(this.tileArray[xPos][yPos]);
         //this.tileArray[xPos][yPos].update();
     }
 
@@ -314,6 +318,7 @@ class MapGrid {
         for(let i = 0; i < this.objectsPicArr.length; i++) {
             this.objectsPicArr[i].draw(camera);
         }
+        this.objectsPicArr[0].draw(camera);
         return;
     }
 
