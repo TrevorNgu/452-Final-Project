@@ -77,6 +77,12 @@ class Storage extends engine.Scene {
             this.mGrid.createObject(this.mDefaultTilePic, i, 0, [.4, .4, .4, .8]);
         }
 
+        for(let i = 2; i < 6; i++) {
+            for(let j = 3; j < 5; j++) {
+                this.mGrid.createObject(this.mDefaultTilePic, i, j, [.2, .2, .4, .8]);
+            }
+        }
+        
         this.mGrid.createObject(this.mDefaultTilePic, 0, 3, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 0, 4, [.2, .2, 0, .8]);        
         this.mGrid.createObject(this.mDefaultTilePic, 7, 3, [.2, .2, 0, .8]);

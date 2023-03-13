@@ -6,6 +6,8 @@ import Tile from "../engine/renderables/Tile.js";
 
 import Hero from "./hero.js";
 import MyGame from "./my_game.js";
+import Weapons from "./weapons.js";
+import Storage from "./storage.js";
 
 
 // potential texture: https://www.pngall.com/spot-light-png/download/68214
@@ -112,6 +114,12 @@ class Shields extends engine.Scene {
     // anything from this function!
     update() {
         this.objectControler();
+        
+        if(this.mGrid.checkObjectPosition(0, 0, 3) || this.mGrid.checkObjectPosition(0, 0, 4)) {
+            this.nextStorage();
+        } else if(this.mGrid.checkObjectPosition(0, 3, 7) || this.mGrid.checkObjectPosition(0, 4, 7)) {
+            this.nextWeapons();
+        }
     }
 
     objectControler() {
@@ -135,10 +143,17 @@ class Shields extends engine.Scene {
 
     }
     
-    next() {
+    nextStorage() {
         super.next();
-        
-        let nextLevel = new MyGame();
+        let nextLevel = new Storage();
+        nextLevel.setMogusPos(6, 3);
+        nextLevel.start();
+    }
+
+    nextWeapons() {
+        super.next();
+        let nextLevel = new Weapons();
+        nextLevel.setMogusPos(3, 1);
         nextLevel.start();
     }
 
