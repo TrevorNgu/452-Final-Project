@@ -68,8 +68,8 @@ class MyGame extends engine.Scene {
 
         this.mGrid.setTile(this.mDefaultTilePic, 8, 8);
         this.mGrid.createTilePicturesForGrid();
-        this.mGrid.setGridColor([.1, .1, .1, .8]);
-        
+        this.mGrid.forceSetGridColor([.1, .1, .1, .8]);
+
         this.mGrid.createObject(this.mCrew, this.mMogusX, this.mMogusY);
 
         for(let i = 0; i < 8; i++) {
