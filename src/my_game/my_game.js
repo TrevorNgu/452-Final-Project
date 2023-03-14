@@ -97,30 +97,53 @@ class MyGame extends engine.Scene {
         this.mGrid.setGridColor([0, 1, 0, 0.8]);
         this.mGrid.createTilePicturesForGrid();
         this.mGrid.createObject(this.mCharacterPic, 2,3);
-        this.mGrid.createObject(this.mBushPic, 2,2);
-        this.mGrid.setTileCollisionMode(true, 2,2);
+        this.mGrid.createObject(this.mBushPic, 2,1);
+        this.mGrid.setTileCollisionMode(true, 2,1);
         
 
         this.mGrid.createObject(this.mBushPic, 0,2);
         this.mGrid.setTileCollisionMode(true, 0,2);
+        this.mGrid.createObject(this.mBushPic, 0,4);
+        this.mGrid.setTileCollisionMode(true, 0,4);
+        this.mGrid.createObject(this.mBushPic, 0,5);
+        this.mGrid.setTileCollisionMode(true, 0,5);
+        this.mGrid.createObject(this.mBushPic, 0,1);
+        this.mGrid.setTileCollisionMode(true, 0,1);
+        this.mGrid.createObject(this.mBushPic, 3,5);
+        this.mGrid.setTileCollisionMode(true, 3,5);
+        this.mGrid.createObject(this.mBushPic, 1,1);
+        this.mGrid.setTileCollisionMode(true, 1,1);
+        this.mGrid.createObject(this.mBushPic, 2,5);
+        this.mGrid.setTileCollisionMode(true, 2,5);
+
         this.mGrid.createObject(this.mBushPic, 0,3);
         this.mGrid.setTileCollisionMode(true, 0,3);
-        this.mGrid.createObject(this.mBushPic, 3,4);
-        this.mGrid.setTileCollisionMode(true, 3,4);
+         this.mGrid.createObject(this.mBushPic, 6,3);
+        this.mGrid.setTileCollisionMode(true, 6,3); 
         this.mGrid.createObject(this.mBushPic, 4,0);
         this.mGrid.setTileCollisionMode(true, 4,0);
-        this.mGrid.createObject(this.mButtonPic, 1,1);
-        this.mGrid.setTileCollisionMode(false, 1,1);
 
-        this.mGrid.createObject(this.mBoxPic, 3,3);
-        this.mGrid.setTileCollisionMode(true, 3,3);
-        this.mGrid.setDynamicModeOfTile(true, 3,3);
+        this.mGrid.createObject(this.mBushPic, 3,2);
+        this.mGrid.setTileCollisionMode(false, 3,2);
 
-        this.mGrid.createObject(this.mBoxPic, 3,5);
-        this.mGrid.setTileCollisionMode(true, 3,5);
-        this.mGrid.setDynamicModeOfTile(true, 3,5);
+        this.mGrid.createObject(this.mBushPic, 3,4);
+        this.mGrid.setTileCollisionMode(false, 3,4);
 
-        this.mGrid.setTileDoor(this.mDefaultTilePic, this.mDoorClosedPic, this.mDoorOpenPic,1,4);
+        this.mGrid.createObject(this.mBushPic, 3,3);
+        this.mGrid.setTileCollisionMode(false, 3,3);
+
+        this.mGrid.createObject(this.mBoxPic, 5,6);
+        this.mGrid.setTileCollisionMode(true, 5,6);
+        this.mGrid.setDynamicModeOfTile(true, 5,6);
+
+        this.mGrid.createObject(this.mBoxPic, 6,4);
+        this.mGrid.setTileCollisionMode(true, 6,4);
+        this.mGrid.setDynamicModeOfTile(true, 6,4);
+
+        this.mGrid.createObject(this.mButtonPic, 2,2);
+        this.mGrid.setTileCollisionMode(false, 2,2);
+
+        this.mGrid.setTileDoor(this.mDefaultTilePic, this.mDoorClosedPic, this.mDoorOpenPic,1,5);
 
         
 

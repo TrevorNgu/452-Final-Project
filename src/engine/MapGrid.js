@@ -49,6 +49,8 @@ class MapGrid {
         "Reference" : this.doorArray }});
 
         this.gridColor = [0,0,0,0];
+
+        this.buttonTile = this.tileBounds[17];
     }
 
     setGridColor(color) {
@@ -256,7 +258,7 @@ class MapGrid {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     update() {
-        if (this.tileBounds[0].intersectsBound(this.tileBounds[6])){
+        if (this.tileBounds[0].intersectsBound(this.tileBounds[17])){
 
             //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
             // Dispatch/Trigger/Fire the event
@@ -318,6 +320,7 @@ class MapGrid {
         for(let i = 0; i < this.objectsPicArr.length; i++) {
             this.objectsPicArr[i].draw(camera);
         }
+        //console.log(this.objectsPicArr.length);
         this.objectsPicArr[0].draw(camera);
         return;
     }
