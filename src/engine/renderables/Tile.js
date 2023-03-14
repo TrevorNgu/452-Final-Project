@@ -17,7 +17,7 @@ class Tile extends TextureRenderable{
         this.texture = tex;
         this.hasCollision = false;
         this.hasEvent = false;
-        this.tileEvent = "";//new Event(evnt);
+        this.tileEvent = "";
         this.dynamic = false;
 
         this.objTexture1 = null;
