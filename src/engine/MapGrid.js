@@ -35,9 +35,6 @@ class MapGrid {
             }
         }
 
-        this.mXPos = 0;
-        this.mYPos = 0;
-
         this.movmentSpeed = 1;
         this.movementSmoothInxed = 30;
 
@@ -174,12 +171,6 @@ class MapGrid {
     setTileCollisionMode(mode, xPos, yPos) {
         this.tileArray[xPos][yPos].setCollisionsMode(mode);
     }
-
-    setPosition(xPos, yPos) {
-        this.mXPos = xPos;
-        this.mYPos = yPos;
-    }
-
 
     //Manipulate Functions
     moveObjectToSpecTile(objeIndx, xPosToMove, yPosToMove) {
