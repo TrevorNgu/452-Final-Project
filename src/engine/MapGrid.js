@@ -49,7 +49,6 @@ class MapGrid {
         "Reference" : this.doorArray }});
 
         this.gridColor = [0,0,0,0];
-
         this.buttonTile = this.tileBounds[17];
     }
 
@@ -57,6 +56,7 @@ class MapGrid {
         this.gridColor = color;
     }
 
+    //creates a door
     setTileDoor(tilePic, closedPic = null, openPic = null, xPos, yPos) {
         let newTileClosedPic;
         let newTileOpenPic;
@@ -75,46 +75,31 @@ class MapGrid {
         else {
             newTileOpenPic = new engine.SpriteRenderable(openPic);
         }
+        //tile background pic
         tilePicBG = new engine.SpriteRenderable(tilePic);
-
-
+        //close dore pic
         newTileClosedPic.setColor([0, 0, 0, 0.0]);
         newTileClosedPic.getXform().setSize(this.tileWidth, this.tileHight);
-
-        //set new picture pos
+        //set new colse door picture pos
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         newTileClosedPic.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-
-
-
+        //opend door pic
         newTileOpenPic.setColor([0, 0, 0, 0.0]);
         newTileOpenPic.getXform().setSize(this.tileWidth, this.tileHight);
-/* 
-        newTileOpenPic.setColor([0, 0, 0, 0.0]);
-        newTileOpenPic.getXform().setSize(this.tileWidth, this.tileHight); */
-
         newTileOpenPic.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY); 
-
-
-
-
+        //back ground picture
         tilePicBG.setColor(this.gridColor);
         tilePicBG.getXform().setSize(this.tileWidth, this.tileHight);
-
         //set new picture pos
         tilePicBG.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-
-
-        
+        //creates tile door object 
         this.tileArray[xPos][yPos] = new TileDoor(tilePicBG);
-
         this.tileArray[xPos][yPos].setEvent("door");
         console.log(closedPic);
+        //set textires in the tile door
         this.tileArray[xPos][yPos].setFirstTextureObject(newTileClosedPic);
         this.tileArray[xPos][yPos].setSecondTextureObject(newTileOpenPic);
-
         this.doorArray.push(this.tileArray[xPos][yPos]);
-        //this.tileArray[xPos][yPos].update();
     }
 
     createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
@@ -124,10 +109,8 @@ class MapGrid {
         newObject.setColor([0, 0, 0, 0]);
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos); //Retrieves Position in WC
-
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
         newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-
         //push to the array of object.
         this.objectsPicArr.push(newObject);
         this.objectsPosArr.push([xPos, yPos]);
@@ -152,7 +135,6 @@ class MapGrid {
         let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
         //get new pos
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
-
         let objNewXPos = objCurrentPos[0] + xPosChenge;
         let objNewYPos = objCurrentPos[1] + yPosChenge;
         //check for colision on the new pos
@@ -178,7 +160,6 @@ class MapGrid {
                 this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
             }
         }
-
     }
 
     findObjectIndexBasedOnPos(xPos, yPos) {
@@ -192,21 +173,20 @@ class MapGrid {
         return null;
     }
 
-    moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { //(objeIndx, objNewXPos, objNewYPos)
+    moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { 
         let tileCenterPos = this.getCenterOfTile(objNewXPos, objNewYPos);
         this.MovePictureSomoothly(objeIndx, [tileCenterPos[0], tileCenterPos[1]]);
-        //this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
         this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
-
         this.tileBounds[objeIndx].setPosition(tileCenterPos);
     }
 
     async MovePictureSomoothly(objeIndx, newPos) {
+        //picture old pos
         let oldPosObj = this.objectsPosArr[objeIndx];
         let oldPos = this.getCenterOfTile(oldPosObj[0], oldPosObj[1]);
         let posChange = [newPos[0] - oldPos[0], newPos[1] - oldPos[1]];
         let posChangeFraction = [posChange[0] / this.movementSmoothInxed, posChange[1] / this.movementSmoothInxed];
-
+        //move picture
         for(let i = 0; i < this.movementSmoothInxed; i += 2) {
             await sleep(10);
             this.objectsPicArr[objeIndx].getXform().setPosition
@@ -256,19 +236,14 @@ class MapGrid {
             }
         }
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
     update() {
         if (this.tileBounds[0].intersectsBound(this.tileBounds[17])){
-
             //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
             // Dispatch/Trigger/Fire the event
             document.dispatchEvent(this.event);
-
         }
-        else {
-            //console.log("false");
-        }
-
+        //update tiles
         this.tilesUpdate();
     }
 
@@ -292,17 +267,13 @@ class MapGrid {
             for(let j = 0; j < this.mWidth; j++) {
                 //create picures for tiles
                 let newTile = new engine.SpriteRenderable(this.tilePic);
-
                 newTile.setColor(this.gridColor);
                 newTile.getXform().setSize(this.tileWidth, this.tileHight);
                 //set new picture pos
                 let tileCenterPos = this.getCenterOfTile(i, j);
-
                 newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
                 this.tilePictures[i][j] = newTile;
-
                 this.tileArray[i][j] = new Tile(newTile);
-
             }
         }
     }
@@ -311,7 +282,6 @@ class MapGrid {
         //draw tiles pic
         for(let i = 0; i < this.mHeight; i++) {
             for(let j = 0; j < this.mWidth; j++) {
-                //this.tilePictures[i][j].draw(camera);
                 this.tileArray[i][j].draw(camera);
             }
         }

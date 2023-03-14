@@ -29,20 +29,10 @@ class TileDoor extends Tile{
         }
 
         this.doorIsOpen = false;
-
-        //const door = document.querySelector(".TileDoor");
-
-/*         //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
-        // Add an event listener
-        document.addEventListener("name-of-event", function(e) {
-            console.log(e.detail); // Prints "Example of an event"
-        }); */
     }
 
     draw(camera){
-
-        console.log("Open = " +this.doorIsOpen);
-
+        //draw background
         this.texture.draw(camera);
         //draw background tile textures 
         if(this.objTexture1 != null) {
@@ -56,12 +46,6 @@ class TileDoor extends Tile{
     } 
 
     update() {
-/*         //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
-        // Add an event listener
-        document.addEventListener("name-of-event", function(e) {
-            console.log(e.detail); // Prints "Example of an event"
-        }); */
-        //console.log("aaaaaaa");
     }
 
     setTexture(texture) {
@@ -81,58 +65,15 @@ class TileDoor extends Tile{
         this.hasCollision = false;
     }
 
-    
-    //setEvent(evnt){
-        //this.tileEvent = evnt;//new Event(evnt);
-        //const door = document.querySelector(".Tile");
-        //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
-        //document.addEventListener( this.tileEvent, function opendDoor() {
-        //    console.log("aaaa");
-        //    this.doorIsOpen = true;
-        //}, false);
-
-/*         document.addEventListener( this.tileEvent, function(e) {
-            console.log(e.detail); // Prints "Example of an event"
-            //console.log("second");
-            //e.opendDoor(this);
-        }); */
-    //}
-    
-
     setEvent(evnt){
+        //assign event
         this.tileEvent = evnt;
-
+        //creat event listener
         document.addEventListener( this.tileEvent, function(e) {
-            //e.detail.Reference
             e.detail.Reference[0].setDoorOpen();
             console.log(e.detail.Reference);
-        
         });
-
-/*         console.log("open");
-        this.doorIsOpen = true;
-        this.hasCollision = false;
-        console.log("LLLLLLLLLLLLLLLLLLLLLLLL"); */
     }
-
-}
-
-var scrollthis = {
-    scrolldown: function () {
-      // code that does stuff
-    }
-}
-
-function myHendeler() {
-    return true;
-}
-
-function opendDoor(obj) {
-    console.log("open");
-    obj.doorIsOpen = true;
-    obj.hasCollision = true;
-    console.log(obj.doorIsOpen);
-    return true;
 }
 
 export default TileDoor;

@@ -26,9 +26,6 @@ class Tile extends TextureRenderable{
         if (this.tileEvent != null){
             this.hasEvent = true;
         }
-/*         document.addEventListener("name-of-event", function(e) {
-            console.log(e.detail); // Prints "Example of an event"
-        }); */
     }
 
     draw(camera){
@@ -40,11 +37,9 @@ class Tile extends TextureRenderable{
         if(this.objTexture2 != null) {
             this.objTexture1.draw(camera);
         }
-        //this.texture.draw(camera);
     } 
 
     update(){
-
     }
 
     setCollisionsMode(mode){
@@ -68,12 +63,7 @@ class Tile extends TextureRenderable{
     }
 
     setEvent(evnt){
-        this.tileEvent = evnt;//new Event(evnt);
-        //const door = document.querySelector(".Tile");
-        //https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
- /*        document.addEventListener( this.tileEvent, function(e) {
-            console.log(e.detail); // Prints "Example of an event"
-        }); */
+        this.tileEvent = evnt;
     }
     setDynamicMode(mode) {
         this.dynamic = mode;
