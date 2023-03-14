@@ -35,6 +35,9 @@ class MapGrid {
             }
         }
 
+        this.mXPos = 0;
+        this.mYPos = 0;
+
         this.movmentSpeed = 1;
         this.movementSmoothInxed = 30;
 
@@ -50,11 +53,15 @@ class MapGrid {
     }
 
     //Adding Functions
-    createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
+    createObject(objectPic, xPos, yPos, color) { //xPos and yPos are in Tile Coords
         //created object pic
         this.objectPic = objectPic;
         let newObject= new engine.SpriteRenderable(this.objectPic);
-        newObject.setColor([0, 0, 0, 0]);
+        if(arguments.length == 4) {
+            newObject.setColor(color);
+        } else {
+            newObject.setColor([0, 0, 0, 0]);
+        }
         //set pic position
         let tileCenterPos = this.getCenterOfTile(xPos, yPos); //Retrieves Position in WC
         newObject.getXform().setSize(this.tileWidth, this.tileHight);
@@ -86,6 +93,27 @@ class MapGrid {
         }
     }
 
+    addTile(xCoord, yCoord, tile) {
+        let newTile = new engine.SpriteRenderable(tile);
+
+        newTile.setColor([0, 0, 0, 1]);
+        newTile.getXform().setSize(this.tileWidth, this.tileHight);
+        let tileCenterPos = this.getCenterOfTile(xCoord, yCoord);
+
+        newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.tilePictures[xCoord][yCoord] = newTile;
+
+        this.tileArray[xCoord][yCoord] = new Tile(newTile);
+
+        return;
+    }
+
+    removeTile(xCoord, yCoord) {
+        this.tilePictures[xCoord][yCoord] = null;
+        this.tileArray[xCoord][yCoord] = null;
+        return;
+    }
+    
     //Getter functions
     getTile(xPos, yPos) {
         return this.tileArray[xPos][yPos];
@@ -108,7 +136,22 @@ class MapGrid {
     setGridColor(color) {
         this.gridColor = color;
     }
-    
+
+    forceSetGridColor(color) {
+        for(let i = 0; i < this.mHeight; i++) {
+            for(let j = 0; j < this.mWidth; j++) {
+                console.log("test")
+                this.tileArray[i][j].setColor(color);
+                this.tilePictures[i][j].setColor(color);
+            }
+        }
+    }
+
+    setTileColor(xCoord, yCoord, color) {
+        this.tileArray[xCoord][yCoord].setColor(color);
+        this.tilePictures[xCoord][yCoord].setColor(color);
+    }
+
     setDynamicModeOfTile(mode, xPos, yPos) {
         this.tileArray[xPos][yPos].setDynamicMode(mode);
     }
@@ -159,29 +202,35 @@ class MapGrid {
         this.doorArray.push(this.tileArray[xPos][yPos]);
     }
 
-    setCollisionForObject(objectIndx) {
-        this.objectsPosArr[objectIndx].setModeCollisions(true);
+    setCollisionForObject(index) {
+        this.objectsPosArr[index].setModeCollisions(true);
     }
 
-    setGridPos(x,y) {
-        this.gridPosX = x;
-        this.gridPosY = y;
+    setGridPos(xPos, yPos) {
+        this.gridPosX = xPos;
+        this.gridPosY = yPos;
     }
 
     setTileCollisionMode(mode, xPos, yPos) {
         this.tileArray[xPos][yPos].setCollisionsMode(mode);
     }
 
-    //Manipulate Functions
-    moveObjectToSpecTile(objeIndx, xPosToMove, yPosToMove) {
-        let tileCenterPos = this.getCenterOfTile(xPosToMove, yPosToMove);
-        this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-        this.objectsPosArr[objeIndx] = (xPosToMove, yPosToMove);
+    setPosition(xPos, yPos) {
+        this.mXPos = xPos;
+        this.mYPos = yPos;
     }
 
-    moveObjectInDerection(objeIndx, xPosChenge, yPosChenge) {
+
+    //Manipulate Functions
+    moveObjectToSpecTile(index, xPosToMove, yPosToMove) {
+        let tileCenterPos = this.getCenterOfTile(xPosToMove, yPosToMove);
+        this.objectsPicArr[index].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        this.objectsPosArr[index] = (xPosToMove, yPosToMove);
+    }
+
+    moveObjectInDerection(index, xPosChenge, yPosChenge) {
         //get cureent pos
-        let objCurrentPos = this.objectsPosArr[objeIndx];//this.getCenterOfTile(xPosToMove, yPosToMove);
+        let objCurrentPos = this.objectsPosArr[index];//this.getCenterOfTile(xPosToMove, yPosToMove);
         //get new pos
         let objNewTilePos = ([objCurrentPos[0] + xPosChenge, objCurrentPos[1] + yPosChenge]);
         let objNewXPos = objCurrentPos[0] + xPosChenge;
@@ -189,7 +238,7 @@ class MapGrid {
         //check for colision on the new pos
         if(!(this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getCollisionMode()))  {
             //chenge pic position 
-            this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
+            this.moveObjectPicture(index, objNewXPos, objNewYPos);
         }
         //check if the object on a front is dynamic (movable)
         else if((this.tileArray[objCurrentPos[0] + xPosChenge][objCurrentPos[1] + yPosChenge].getDynamicMode()))  {
@@ -206,28 +255,28 @@ class MapGrid {
                 this.tileArray[objCurrentPos[0] + xPosChenge + xPosChenge][objCurrentPos[1] + yPosChenge + yPosChenge].setCollisionsMode(true);
                 this.tileArray[objCurrentPos[0] + xPosChenge + xPosChenge][objCurrentPos[1] + yPosChenge + yPosChenge].setDynamicMode(true);
                 //move cheracter
-                this.moveObjectPicture(objeIndx, objNewXPos, objNewYPos);
+                this.moveObjectPicture(index, objNewXPos, objNewYPos);
             }
         }
     }
 
-    moveObjectPicture(objeIndx, xPos, yPos) { 
+    moveObjectPicture(index, xPos, yPos) { 
         let tileCenterPos = this.getCenterOfTile(xPos, yPos);
-        this.MovePictureSomoothly(objeIndx, [tileCenterPos[0], tileCenterPos[1]]);
-        this.objectsPosArr[objeIndx] = ([xPos, yPos]);
-        this.tileBounds[objeIndx].setPosition(tileCenterPos);
+        this.MovePictureSomoothly(index, [tileCenterPos[0], tileCenterPos[1]]);
+        this.objectsPosArr[index] = ([xPos, yPos]);
+        this.tileBounds[index].setPosition(tileCenterPos);
     }
 
-    async MovePictureSomoothly(objeIndx, newPos) {
+    async MovePictureSomoothly(index, newPos) {
         //picture old pos
-        let oldPosObj = this.objectsPosArr[objeIndx];
+        let oldPosObj = this.objectsPosArr[index];
         let oldPos = this.getCenterOfTile(oldPosObj[0], oldPosObj[1]);
         let posChange = [newPos[0] - oldPos[0], newPos[1] - oldPos[1]];
         let posChangeFraction = [posChange[0] / this.movementSmoothInxed, posChange[1] / this.movementSmoothInxed];
         //move picture
         for(let i = 0; i < this.movementSmoothInxed; i += 2) {
             await sleep(10);
-            this.objectsPicArr[objeIndx].getXform().setPosition
+            this.objectsPicArr[index].getXform().setPosition
             ((oldPos[0] + (posChangeFraction[0] * i)) + this.gridPosX,
              (oldPos[1] + (posChangeFraction[1] * i)) + this.gridPosY);
         }
@@ -245,6 +294,10 @@ class MapGrid {
         return null;
     }
 
+    checkObjectPosition(index, xPos, yPos) {
+        return ((this.objectsPosArr[index][0] == xPos) && (this.objectsPosArr[index][1] == yPos))
+    }
+    
     printGrid() {
         for(let i = 0; i < this.mWidth; i++) {
             for(let j = 0; j < this.mHeight; j++) {
