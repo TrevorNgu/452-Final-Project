@@ -10,14 +10,15 @@ import * as glSys from "../core/gl.js";
 import TextureRenderable from "./renderable.js";
 import * as texture from "../resources/texture.js";
 import * as shaderResources from "../core/shader_resources.js";
+import Tile from "./Tile.js";
 
-class Tile extends TextureRenderable{
+class TileDoor extends Tile{
     constructor(tex, evnt = null){
         super();
         this.texture = tex;
-        this.hasCollision = false;
+        this.hasCollision = true;
         this.hasEvent = false;
-        this.tileEvent = "";
+        this.tileEvent = "";//new Event(evnt);
         this.dynamic = false;
 
         this.objTexture1 = null;
@@ -26,47 +27,25 @@ class Tile extends TextureRenderable{
         if (this.tileEvent != null){
             this.hasEvent = true;
         }
+
+        this.doorIsOpen = false;
     }
 
     draw(camera){
+        //draw background
         this.texture.draw(camera);
         //draw background tile textures 
         if(this.objTexture1 != null) {
             this.objTexture2.draw(camera);
         }
         if(this.objTexture2 != null) {
-            this.objTexture1.draw(camera);
+            if((this.doorIsOpen != true)) {
+                this.objTexture1.draw(camera);
+            }
         }
     } 
 
-    update(){
-    }
-
-    setCollisionsMode(mode){
-        this.hasCollision = mode;
-    }
-
-    getCollisionMode() {
-        return this.hasCollision;
-    }
-
-    getDynamicMode() {
-        return this.dynamic;
-    }
-
-    getTexture() {
-        return this.texture;
-    }
-
-    toggleEvent(){
-        this.hasEvent = !this.hasEvent;
-    }
-
-    setEvent(evnt){
-        this.tileEvent = evnt;
-    }
-    setDynamicMode(mode) {
-        this.dynamic = mode;
+    update() {
     }
 
     setTexture(texture) {
@@ -81,13 +60,20 @@ class Tile extends TextureRenderable{
         this.objTexture2 = textrue;
     }
 
-    getFirstTextureObject() {
-        return this.objTexture1;
+    setDoorOpen() {
+        this.doorIsOpen = true;
+        this.hasCollision = false;
     }
 
-    getSecondTextureObject() {
-        return this.objTexture2;
+    setEvent(evnt){
+        //assign event
+        this.tileEvent = evnt;
+        //creat event listener
+        document.addEventListener( this.tileEvent, function(e) {
+            e.detail.Reference[0].setDoorOpen();
+            console.log(e.detail.Reference);
+        });
     }
 }
 
-export default Tile;
+export default TileDoor;
