@@ -77,21 +77,36 @@ class MyGame extends engine.Scene {
             this.mGrid.createObject(this.mDefaultTilePic, i, 7, [.4, .4, .4, .8]);
             this.mGrid.createObject(this.mDefaultTilePic, 7, i, [.4, .4, .4, .8]);
             this.mGrid.createObject(this.mDefaultTilePic, i, 0, [.4, .4, .4, .8]);
+            this.mGrid.setTileCollisionMode(true, 0, i);
+            this.mGrid.setTileCollisionMode(true, i, 7);
+            this.mGrid.setTileCollisionMode(true, 7, i);
+            this.mGrid.setTileCollisionMode(true, i, 0);
         }
 
         this.mGrid.createObject(this.mDefaultTilePic, 3, 4, [0, 0, .8, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 4, 4, [0, 0, .8, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 3, 3, [0, 0, .8, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 4, 3, [0, 0, .8, .8]);
+        this.mGrid.setTileCollisionMode(true, 3, 4);
+        this.mGrid.setTileCollisionMode(true, 4, 4);
+        this.mGrid.setTileCollisionMode(true, 3, 3);
+        this.mGrid.setTileCollisionMode(true, 4, 3);
+
 
         this.mGrid.createObject(this.mDefaultTilePic, 0, 3, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 0, 4, [.2, .2, 0, .8]);  
+        this.mGrid.setTileCollisionMode(false, 0, 3);
+        this.mGrid.setTileCollisionMode(false, 0, 4);
 
         this.mGrid.createObject(this.mDefaultTilePic, 7, 3, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 7, 4, [.2, .2, 0, .8]);
+        this.mGrid.setTileCollisionMode(false, 7, 3);
+        this.mGrid.setTileCollisionMode(false, 7, 4);
 
         this.mGrid.createObject(this.mDefaultTilePic, 3, 0, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 4, 0, [.2, .2, 0, .8]);
+        this.mGrid.setTileCollisionMode(false, 3, 0);
+        this.mGrid.setTileCollisionMode(false, 4, 0);
 
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(

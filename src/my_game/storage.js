@@ -75,11 +75,16 @@ class Storage extends engine.Scene {
             this.mGrid.createObject(this.mDefaultTilePic, i, 7, [.4, .4, .4, .8]);
             this.mGrid.createObject(this.mDefaultTilePic, 7, i, [.4, .4, .4, .8]);
             this.mGrid.createObject(this.mDefaultTilePic, i, 0, [.4, .4, .4, .8]);
+            this.mGrid.setTileCollisionMode(true, 0, i);
+            this.mGrid.setTileCollisionMode(true, i, 7);
+            this.mGrid.setTileCollisionMode(true, 7, i);
+            this.mGrid.setTileCollisionMode(true, i, 0);
         }
 
         for(let i = 2; i < 6; i++) {
             for(let j = 3; j < 5; j++) {
                 this.mGrid.createObject(this.mDefaultTilePic, i, j, [.2, .2, .4, .8]);
+                this.mGrid.setTileCollisionMode(true, i, j);
             }
         }
         
@@ -89,6 +94,12 @@ class Storage extends engine.Scene {
         this.mGrid.createObject(this.mDefaultTilePic, 7, 4, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 3, 7, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 4, 7, [.2, .2, 0, .8]);
+        this.mGrid.setTileCollisionMode(false, 0, 3);
+        this.mGrid.setTileCollisionMode(false, 0, 4);
+        this.mGrid.setTileCollisionMode(false, 3, 7);
+        this.mGrid.setTileCollisionMode(false, 4, 7);
+        this.mGrid.setTileCollisionMode(false, 7, 3);
+        this.mGrid.setTileCollisionMode(false, 7, 4);
 
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(

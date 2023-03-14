@@ -75,11 +75,16 @@ class LowerEngine extends engine.Scene {
             this.mGrid.createObject(this.mDefaultTilePic, i, 7, [.4, .4, .4, .8]);
             this.mGrid.createObject(this.mDefaultTilePic, 7, i, [.4, .4, .4, .8]);
             this.mGrid.createObject(this.mDefaultTilePic, i, 0, [.4, .4, .4, .8]);
+            this.mGrid.setTileCollisionMode(true, 0, i);
+            this.mGrid.setTileCollisionMode(true, i, 7);
+            this.mGrid.setTileCollisionMode(true, 7, i);
+            this.mGrid.setTileCollisionMode(true, i, 0);
         }
 
         for(let i = 1; i < 4; i++) {
             for(let j = 2; j < 5; j++) {
                 this.mGrid.createObject(this.mDefaultTilePic, i, j, [0, 0, 0, .8]);
+                this.mGrid.setTileCollisionMode(true, i, j);
             }
         }
         
@@ -87,6 +92,11 @@ class LowerEngine extends engine.Scene {
         this.mGrid.createObject(this.mDefaultTilePic, 4, 7, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 7, 3, [.2, .2, 0, .8]);
         this.mGrid.createObject(this.mDefaultTilePic, 7, 4, [.2, .2, 0, .8]);
+        this.mGrid.setTileCollisionMode(false, 3, 7);
+        this.mGrid.setTileCollisionMode(false, 4, 7);
+        this.mGrid.setTileCollisionMode(false, 7, 3);
+        this.mGrid.setTileCollisionMode(false, 7, 4);
+
 
 
         // Step A: set up the cameras
