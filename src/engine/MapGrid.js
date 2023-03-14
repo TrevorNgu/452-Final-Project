@@ -207,7 +207,7 @@ class MapGrid {
         let posChange = [newPos[0] - oldPos[0], newPos[1] - oldPos[1]];
         let posChangeFraction = [posChange[0] / this.movementSmoothInxed, posChange[1] / this.movementSmoothInxed];
 
-        for(let i = 0; i < this.movementSmoothInxed; i++) {
+        for(let i = 0; i < this.movementSmoothInxed; i += 2) {
             await sleep(10);
             this.objectsPicArr[objeIndx].getXform().setPosition
             ((oldPos[0] + (posChangeFraction[0] * i)) + this.gridPosX,
