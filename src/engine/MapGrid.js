@@ -52,8 +52,68 @@ class MapGrid {
         this.buttonTile = this.tileBounds[17];
     }
 
+    //Adding Functions
+    createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
+        //created object pic
+        this.objectPic = objectPic;
+        let newObject= new engine.SpriteRenderable(this.objectPic);
+        newObject.setColor([0, 0, 0, 0]);
+        //set pic position
+        let tileCenterPos = this.getCenterOfTile(xPos, yPos); //Retrieves Position in WC
+        newObject.getXform().setSize(this.tileWidth, this.tileHight);
+        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+        //push to the array of object.
+        this.objectsPicArr.push(newObject);
+        this.objectsPosArr.push([xPos, yPos]);
+        console.log(tileCenterPos);
+        //Create Bounding Box and push into tileBounds
+        this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
+        this.tileBounds.push(this.tileBox);
+    }
+
+    createTilePicturesForGrid() {
+        for(let i = 0; i < this.mHeight; i++) {
+            this.tilePictures[i] = [];
+            this.tileArray[i] = [];
+            for(let j = 0; j < this.mWidth; j++) {
+                //create picures for tiles
+                let newTile = new engine.SpriteRenderable(this.tilePic);
+                newTile.setColor(this.gridColor);
+                newTile.getXform().setSize(this.tileWidth, this.tileHight);
+                //set new picture pos
+                let tileCenterPos = this.getCenterOfTile(i, j);
+                newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
+                this.tilePictures[i][j] = newTile;
+                this.tileArray[i][j] = new Tile(newTile);
+            }
+        }
+    }
+
+    //Getter functions
+    getTile(xPos, yPos) {
+        return this.tileArray[xPos][yPos];
+    }
+
+    getCenterOfTile(xPos, yPos) {
+        let centerX = (xPos * (this.tileWidth)) - this.tileWidth/2;
+        let centerY = (yPos * (this.tileHight)) - this.tileHight/2;
+        let tileCenterPos = [centerX, centerY];
+        return tileCenterPos;
+    }
+
+    //Setter functions
+    setTile (tile, width, hight) {
+        this.tilePic = tile;
+        this.tileWidth = width;
+        this.tileHight = hight;
+    }
+
     setGridColor(color) {
         this.gridColor = color;
+    }
+    
+    setDynamicModeOfTile(mode, xPos, yPos) {
+        this.tileArray[xPos][yPos].setDynamicMode(mode);
     }
 
     //creates a door
@@ -102,28 +162,26 @@ class MapGrid {
         this.doorArray.push(this.tileArray[xPos][yPos]);
     }
 
-    createObject(objectPic, xPos, yPos) { //xPos and yPos are in Tile Coords
-        //created object pic
-        this.objectPic = objectPic;
-        let newObject= new engine.SpriteRenderable(this.objectPic);
-        newObject.setColor([0, 0, 0, 0]);
-        //set pic position
-        let tileCenterPos = this.getCenterOfTile(xPos, yPos); //Retrieves Position in WC
-        newObject.getXform().setSize(this.tileWidth, this.tileHight);
-        newObject.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-        //push to the array of object.
-        this.objectsPicArr.push(newObject);
-        this.objectsPosArr.push([xPos, yPos]);
-        console.log(tileCenterPos);
-        //Create Bounding Box and push into tileBounds
-        this.tileBox = new BoundingBox(tileCenterPos, this.tileWidth, this.tileHight);
-        this.tileBounds.push(this.tileBox);
-    }
-
-    setColisionForObject(objectIndx) {
+    setCollisionForObject(objectIndx) {
         this.objectsPosArr[objectIndx].setModeCollisions(true);
     }
 
+    setGridPos(x,y) {
+        this.gridPosX = x;
+        this.gridPosY = y;
+    }
+
+    setTileCollisionMode(mode, xPos, yPos) {
+        this.tileArray[xPos][yPos].setCollisionsMode(mode);
+    }
+
+    setPosition(xPos, yPos) {
+        this.mXPos = xPos;
+        this.mYPos = yPos;
+    }
+
+
+    //Manipulate Functions
     moveObjectToSpecTile(objeIndx, xPosToMove, yPosToMove) {
         let tileCenterPos = this.getCenterOfTile(xPosToMove, yPosToMove);
         this.objectsPicArr[objeIndx].getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
@@ -162,21 +220,10 @@ class MapGrid {
         }
     }
 
-    findObjectIndexBasedOnPos(xPos, yPos) {
-        for(let i = 0; i < this.objectsPicArr.length; i++) {
-            if((this.objectsPosArr[i][0] == xPos) && ((this.objectsPosArr[i][1] == yPos))) { //if((this.objectsPosArr[i][0]) == ([xPos, yPos])) {
-                console.log(i);
-                return i;
-            }
-        }
-        console.log("null");
-        return null;
-    }
-
-    moveObjectPicture(objeIndx, objNewXPos, objNewYPos) { 
-        let tileCenterPos = this.getCenterOfTile(objNewXPos, objNewYPos);
+    moveObjectPicture(objeIndx, xPos, yPos) { 
+        let tileCenterPos = this.getCenterOfTile(xPos, yPos);
         this.MovePictureSomoothly(objeIndx, [tileCenterPos[0], tileCenterPos[1]]);
-        this.objectsPosArr[objeIndx] = ([objNewXPos, objNewYPos]);
+        this.objectsPosArr[objeIndx] = ([xPos, yPos]);
         this.tileBounds[objeIndx].setPosition(tileCenterPos);
     }
 
@@ -195,9 +242,16 @@ class MapGrid {
         }
     }
 
-    setGridPos(x,y) {
-        this.gridPosX = x;
-        this.gridPosY = y;
+    //Utility Functions
+    findObjectIndexBasedOnPos(xPos, yPos) {
+        for(let i = 0; i < this.objectsPicArr.length; i++) {
+            if((this.objectsPosArr[i][0] == xPos) && ((this.objectsPosArr[i][1] == yPos))) { //if((this.objectsPosArr[i][0]) == ([xPos, yPos])) {
+                console.log(i);
+                return i;
+            }
+        }
+        console.log("null");
+        return null;
     }
 
     printGrid() {
@@ -206,27 +260,6 @@ class MapGrid {
                 console.log(this.mArray[i][j]);
             }
         }
-    }
-
-    addTile(xCoord, yCoord, tile) {
-        return;
-    }
-
-    removeTile(xCoord, yCoord) {
-        return;
-    }
-
-    getTile(tileXIndex, tileYIndex) {
-        return this.tileArray[tileXIndex][tileYIndex];
-    }
-
-    setTileCollisionMode(mode, tileXIndex, tileYIndex) {
-        this.tileArray[tileXIndex][tileYIndex].setCollisionsMode(mode);
-    }
-
-    setPosition(xPos, yPos) {
-        this.mXPos = xPos;
-        this.mYPos = yPos;
     }
 
     tilesUpdate() {
@@ -247,37 +280,6 @@ class MapGrid {
         this.tilesUpdate();
     }
 
-    setTile (tile, width, hight) {
-        this.tilePic = tile;
-        this.tileWidth = width;
-        this.tileHight = hight;
-    }
-
-    getCenterOfTile(x, y) {
-        let centerX = (x * (this.tileWidth)) - this.tileWidth/2;
-        let centerY = (y * (this.tileHight)) - this.tileHight/2;
-        let tileCenterPos = [centerX, centerY];
-        return tileCenterPos;
-    }
-
-    createTilePicturesForGrid() {
-        for(let i = 0; i < this.mHeight; i++) {
-            this.tilePictures[i] = [];
-            this.tileArray[i] = [];
-            for(let j = 0; j < this.mWidth; j++) {
-                //create picures for tiles
-                let newTile = new engine.SpriteRenderable(this.tilePic);
-                newTile.setColor(this.gridColor);
-                newTile.getXform().setSize(this.tileWidth, this.tileHight);
-                //set new picture pos
-                let tileCenterPos = this.getCenterOfTile(i, j);
-                newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-                this.tilePictures[i][j] = newTile;
-                this.tileArray[i][j] = new Tile(newTile);
-            }
-        }
-    }
-
     draw (camera) {
         //draw tiles pic
         for(let i = 0; i < this.mHeight; i++) {
@@ -293,18 +295,6 @@ class MapGrid {
         //console.log(this.objectsPicArr.length);
         this.objectsPicArr[0].draw(camera);
         return;
-    }
-
-    TranslateTileToWC() {
-        return;
-    }
-
-    TranslateWCToTile() {
-        return;
-    }
-
-    setDynamicModeOfTile(mode, xPos, yPos) {
-        this.tileArray[xPos][yPos].setDynamicMode(mode);
     }
 }
 
