@@ -77,12 +77,12 @@ class Tile extends TextureRenderable{
         this.dynamic = mode;
     }
 
-    setFirstTextureObject(textrue) {
-        this.objTexture1 = textrue;
+    setFirstTextureObject(tex) {
+        this.objTexture1 = tex;
     }
 
-    setSecondTextureObject(textrue) {
-        this.objTexture2 = textrue;
+    setSecondTextureObject(tex) {
+        this.objTexture2 = tex;
     }
 
     getFirstTextureObject() {
