@@ -93,24 +93,24 @@ class MapGrid {
         }
     }
 
-    addTile(xCoord, yCoord, tile) {
+    addTile(xPos, yPos, tile) {
         let newTile = new engine.SpriteRenderable(tile);
 
         newTile.setColor([0, 0, 0, 1]);
         newTile.getXform().setSize(this.tileWidth, this.tileHight);
-        let tileCenterPos = this.getCenterOfTile(xCoord, yCoord);
+        let tileCenterPos = this.getCenterOfTile(xPos, yPos);
 
         newTile.getXform().setPosition(tileCenterPos[0] + this.gridPosX, tileCenterPos[1] + this.gridPosY);
-        this.tilePictures[xCoord][yCoord] = newTile;
+        this.tilePictures[xPos][yPos] = newTile;
 
-        this.tileArray[xCoord][yCoord] = new Tile(newTile);
+        this.tileArray[xPos][yPos] = new Tile(newTile);
 
         return;
     }
 
-    removeTile(xCoord, yCoord) {
-        this.tilePictures[xCoord][yCoord] = null;
-        this.tileArray[xCoord][yCoord] = null;
+    removeTile(xPos, yPos) {
+        this.tilePictures[xPos][yPos] = null;
+        this.tileArray[xPos][yPos] = null;
         return;
     }
     
